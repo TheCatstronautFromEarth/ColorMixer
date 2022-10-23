@@ -15,50 +15,50 @@ public class PanelOutput {
 
 	private static JButton btnSetClipboard;
 	private static JTextField txtOutput;
-	private static Border loweredetched;
+	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);;
 	private static Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-	private static int xoffset = 12, yoffset = 18, buttonWidth = 90, textHeight = 24;
-	
+
 	static void panOut() {
-		
-		JPanel OutBox = new JPanel();
-		OutBox.setLayout(null);
-		OutBox.setBounds(15, 366, 230, 56);
-		OutBox.setOpaque(false);
-		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		OutBox.setBorder(BorderFactory.createTitledBorder(loweredetched, "HEX Output"));
-		WindowMixer.getCp().add(OutBox);
-		
-		// Button Set value to clipboard 
-		btnSetClipboard = new JButton("Copy");				
-		btnSetClipboard.setBounds(xoffset, yoffset, buttonWidth, textHeight);
-		btnSetClipboard.setMnemonic('k');
-		btnSetClipboard.setToolTipText("Copy to clipboard");
-		btnSetClipboard.addActionListener(new ActionListener() {		
-			public void actionPerformed(ActionEvent event) {
-				handlebtnSetClipboard(event);
-			}
-		});
-		OutBox.add(btnSetClipboard);
-		
-		// TextField HEX output	
-		setTxtOutput(new JTextField());				
-		getTxtOutput().setBounds(110, yoffset, buttonWidth, textHeight);
-		WindowMixer.setTxtOut((WindowMixer.getValueRed() < 16 ? "0":"") + Integer.toHexString(WindowMixer.getValueRed()) + (WindowMixer.getValueGreen() < 16 ? "0":"") + Integer.toHexString(WindowMixer.getValueGreen()) + (WindowMixer.getValueBlue() < 16 ? "0":"") + Integer.toHexString(WindowMixer.getValueBlue()));
-    	getTxtOutput().setText(String.valueOf(WindowMixer.getTxtOut()));
-    	OutBox.add(getTxtOutput());
-    	
-	}
-	
-	// Set Hex value to clipboard
-	protected static void handlebtnSetClipboard(ActionEvent event) {
-		StringSelection stringSelection = new StringSelection(getTxtOutput().getText());
-		cb.setContents(stringSelection, null);
+		// Panel Output
+		JPanel pnlOutput = new JPanel();
+		pnlOutput.setLayout(null);
+		pnlOutput.setBounds(15, 366, 230, 56);
+		pnlOutput.setOpaque(false);
+		pnlOutput.setBorder(BorderFactory.createTitledBorder(loweredetched, "HEX Output"));
+		WindowMixer.getCp().add(pnlOutput);
+
+		// Button SetToClipboard
+		btnSetClipboard = new JButton("Copy");
+		btnSetClipboard.setBounds(12, 18, 90, 24);
+		btnSetClipboard.addActionListener(copyAction);
+		pnlOutput.add(btnSetClipboard);
+
+		// TextField HEX output
+		setTxtOutput(new JTextField());
+		getTxtOutput().setBounds(110, 18, 90, 24);
+		WindowMixer.setTxtOut((
+				WindowMixer.getValueRed() < 16 ? "0" : "")
+				+ Integer.toHexString(WindowMixer.getValueRed())
+				+ (WindowMixer.getValueGreen() < 16 ? "0" : "")
+				+ Integer.toHexString(WindowMixer.getValueGreen())
+				+ (WindowMixer.getValueBlue() < 16 ? "0" : "")
+				+ Integer.toHexString(WindowMixer.getValueBlue()));
+		getTxtOutput().setText(String.valueOf(WindowMixer.getTxtOut()));
+		pnlOutput.add(getTxtOutput());
 	}
 
 	
-	// Setter Getter
+	// Buttons ActionListener 
+	private static ActionListener copyAction = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			StringSelection stringSelection = new StringSelection(getTxtOutput().getText());
+			cb.setContents(stringSelection, null);
+		}
+	};
+
 	
+	// Setter Getter
 	public static JTextField getTxtOutput() {
 		return txtOutput;
 	}
