@@ -18,3 +18,6 @@ Future ideas:
 - More cue settings
 - Controlling SmartHome WLAN lights with Tuya
 - Controlling DMX lights over WLAN using an ESP8266
+
+
+![Screen1](https://user-images.githubusercontent.com/116021405/197399214-24a8e41f-3daf-4482-a39a-c1dd17ba8612.png)
