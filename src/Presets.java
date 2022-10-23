@@ -36,30 +36,29 @@ public class Presets {
 					if (CueNummer[i] == 1) {
 						PanelCue.getLblCue01().setText(valueHex[i]);
 						PanelCue.getLblCue01Thumb().setOpaque(true);
-						PanelCue.getLblCue01Thumb().setBackground(new Color(red[i],
-								green[i], blue[i]));
+						PanelCue.getLblCue01Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
 					if (CueNummer[i] == 2) {
 						PanelCue.getLblCue02().setText(valueHex[i]);
 						PanelCue.getLblCue02Thumb().setOpaque(true);
-						PanelCue.getLblCue02Thumb().setBackground(new Color(red[i],
-								green[i], blue[i]));
+						PanelCue.getLblCue02Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
 					if (CueNummer[i] == 3) {
 						PanelCue.getLblCue03().setText(valueHex[i]);
 						PanelCue.getLblCue03Thumb().setOpaque(true);
-						PanelCue.getLblCue03Thumb().setBackground(new Color(red[i],
-								green[i], blue[i]));
+						PanelCue.getLblCue03Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
 					if (CueNummer[i] == 4) {
 						PanelCue.getLblCue04().setText(valueHex[i]);
 						PanelCue.getLblCue04Thumb().setOpaque(true);
-						PanelCue.getLblCue04Thumb().setBackground(new Color(red[i],
-								green[i], blue[i]));
+						PanelCue.getLblCue04Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
 				}
+				
 				i++;
+			
 			}
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -109,7 +108,7 @@ public class Presets {
 				pw.flush();
 				pw.close();
 				JOptionPane.showMessageDialog(null, "Save successful");
-				PanelPreset.get_fileNameTF().setText(file);
+				PanelPreset.getfileNameTF().setText(file);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

@@ -17,7 +17,7 @@ import javax.swing.event.ChangeListener;
 public class WindowMixer extends JFrame implements ChangeListener {
 
 	private static final long serialVersionUID = 3065787531046475413L;
-	private static int valueRed = 200, valueGreen = 200, valueBlue = 200;
+
 	private static JButton btnSwitch;
 	private static JSlider sldRed, sldGreen, sldBlue, sldMaster;
 	private static JLabel lblRed, lblGreen, lblBlue;
@@ -25,13 +25,12 @@ public class WindowMixer extends JFrame implements ChangeListener {
 	private static JLabel hexRed, hexGreen, hexBlue;
 	private static JLabel lblRedPercent, lblGreenPercent, lblBluePercent;
 	private static JLabel txtMaster, txtDec, txtHex;
+	private static int valueRed = 200, valueGreen = 200, valueBlue = 200;
 	private static int oldMasterValue = 200, masterValue = 200;
 	private static String txtOut;
 	private static boolean MasterLog = false;
-	private static Border loweredetched;
+	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private static Container cp;
-	private static int yLblName = 15, ySlider = 35, buttonWidth = 90, textHeight = 24, sldHeight = 360, sldWidth = 70, lblValueYoffset = 400;
-
 
     // Create window
 	public WindowMixer(String titel) {
@@ -41,8 +40,10 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		this.setVisible(true);
 	}
 
+	
 	// Initialize window & panels
 	private void init() {
+		
 		// Create Content Pane
 		setBounds(300, 310, 655, 532);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,28 +56,19 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		PanelCue.panCue();
 		PanelPreset.panPreset();
 		PanelOutput.panOut();
-
-			
+		
 		// Panel Mixer
 		JPanel pnlMixer = new JPanel();
 		pnlMixer.setLayout(null);
 		pnlMixer.setBounds(260, 15, 380, 475);
 		pnlMixer.setOpaque(false);
-		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		pnlMixer.setBorder(BorderFactory.createTitledBorder(loweredetched,
-				"Mixer"));
+		pnlMixer.setBorder(BorderFactory.createTitledBorder(loweredetched, "Mixer"));
 		getCp().add(pnlMixer);
 
 		
-		// Faderline Red
-		// Label Red Name
-		lblRed = new JLabel("Red");
-		lblRed.setBounds(30, yLblName, 100, textHeight);
-		pnlMixer.add(lblRed);
-
 		// Fader Red
 		setSldRed(new JSlider(JSlider.VERTICAL, 0, 255, getValueRed()));
-		getSldRed().setBounds(5, ySlider, sldWidth, sldHeight);
+		getSldRed().setBounds(5, 35, 70, 360);
 		getSldRed().setMajorTickSpacing(10);
 		getSldRed().setMinorTickSpacing(5);
 		getSldRed().setPaintTicks(true);
@@ -85,33 +77,11 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		getSldRed().setName("Red");
 		getSldRed().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 		getSldRed().addChangeListener((ChangeListener) this);
-		pnlMixer.add(getSldRed());
-
-		// Label Red Percent
-		lblRedPercent = new JLabel("78 %");
-		lblRedPercent.setBounds(30, lblValueYoffset, 100, textHeight);
-		pnlMixer.add(lblRedPercent);
+		pnlMixer.add(getSldRed());	
 		
-		// Text Red DEC Value
-		txtRed = new JLabel(getValueRed() + " ");
-		txtRed.setBounds(30, lblValueYoffset+20, 100, textHeight);
-		pnlMixer.add(txtRed);
-
-		// Text Red HEX Value
-		hexRed = new JLabel(Integer.toHexString(getValueRed()) + " ");
-		hexRed.setBounds(30, lblValueYoffset+40, 100, textHeight);
-		pnlMixer.add(hexRed);
-		
-		
-		// Faderline Green
-		// Label Green Name
-		lblGreen = new JLabel("Green");
-		lblGreen.setBounds(115, yLblName, 100, textHeight);
-		pnlMixer.add(lblGreen);
-
 		// Fader Green
 		setSldGreen(new JSlider(JSlider.VERTICAL, 0, 255, getValueGreen()));
-		getSldGreen().setBounds(90, ySlider, sldWidth, sldHeight);
+		getSldGreen().setBounds(90, 35, 70, 360);
 		getSldGreen().setMajorTickSpacing(10);
 		getSldGreen().setMinorTickSpacing(5);
 		getSldGreen().setPaintTicks(true);
@@ -121,32 +91,10 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		getSldGreen().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 		getSldGreen().addChangeListener((ChangeListener) this);
 		pnlMixer.add(getSldGreen());
-
-		// Label Green Percent
-		lblGreenPercent = new JLabel("78 %");
-		lblGreenPercent.setBounds(115, lblValueYoffset, 100, textHeight);
-		pnlMixer.add(lblGreenPercent);
 		
-		// Text Green DEC Value
-		txtGreen = new JLabel(getValueGreen() + " ");
-		txtGreen.setBounds(115, lblValueYoffset+20, 100, textHeight);
-		pnlMixer.add(txtGreen);
-
-		// Text Green HEX Value
-		hexGreen = new JLabel(Integer.toHexString(getValueGreen()) + " ");
-		hexGreen.setBounds(115, lblValueYoffset+40, 100, textHeight);
-		pnlMixer.add(hexGreen);
-
-		
-		// Faderline Blue
-		// Label Blue Name
-		lblBlue = new JLabel("Blue");
-		lblBlue.setBounds(200, yLblName, 100, textHeight);
-		pnlMixer.add(lblBlue);
-
 		// Fader Blue
 		setSldBlue(new JSlider(JSlider.VERTICAL, 0, 255, getValueBlue()));
-		getSldBlue().setBounds(175, ySlider, sldWidth, sldHeight);
+		getSldBlue().setBounds(175, 35, 70, 360);
 		getSldBlue().setMajorTickSpacing(10);
 		getSldBlue().setMinorTickSpacing(5);
 		getSldBlue().setPaintTicks(true);
@@ -156,32 +104,10 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		getSldBlue().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 		getSldBlue().addChangeListener((ChangeListener) this);
 		pnlMixer.add(getSldBlue());
-
-		// Label Blue Percent
-		lblBluePercent = new JLabel("78 %");
-		lblBluePercent.setBounds(200, lblValueYoffset, 100, textHeight);
-		pnlMixer.add(lblBluePercent);
 		
-		// Text Blue DEC Value
-		txtBlue = new JLabel(getValueBlue() + " ");
-		txtBlue.setBounds(200, lblValueYoffset+20, 100, textHeight);
-		pnlMixer.add(txtBlue);
-
-		// Text Blue HEX Value
-		hexBlue = new JLabel(Integer.toHexString(getValueBlue()) + " ");
-		hexBlue.setBounds(200, lblValueYoffset+40, 100, textHeight);
-		pnlMixer.add(hexBlue);
-
-
-		// Faderline Master
-		// Master Ausgabe
-		txtMaster = new JLabel("Master");
-		txtMaster.setBounds(295, yLblName, 100, textHeight);
-		pnlMixer.add(txtMaster);
-
 		// Master Fader
 		setSldMaster(new JSlider(JSlider.VERTICAL, 0, 255, 128));
-		getSldMaster().setBounds(280, ySlider, sldWidth, sldHeight);
+		getSldMaster().setBounds(280, 35, 70, 360);
 		getSldMaster().setMajorTickSpacing(10);
 		getSldMaster().setMinorTickSpacing(5);
 		getSldMaster().setPaintTicks(true);
@@ -192,10 +118,90 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		getSldMaster().addChangeListener((ChangeListener) this);
 		pnlMixer.add(getSldMaster());
 		
+
+		// Label Red Name
+		lblRed = new JLabel("Red");
+		lblRed.setBounds(30, 15, 100, 24);
+		pnlMixer.add(lblRed);
+
+		// Label Green Name
+		lblGreen = new JLabel("Green");
+		lblGreen.setBounds(115, 15, 100, 24);
+		pnlMixer.add(lblGreen);
+		
+		// Label Blue Name
+		lblBlue = new JLabel("Blue");
+		lblBlue.setBounds(200, 15, 100, 24);
+		pnlMixer.add(lblBlue);
+		
+		// Label Master Name
+		txtMaster = new JLabel("Master");
+		txtMaster.setBounds(295, 15, 100, 24);
+		pnlMixer.add(txtMaster);
+		
+
+		// Label Red Percent
+		lblRedPercent = new JLabel("78 %");
+		lblRedPercent.setBounds(30, 400, 100, 24);
+		pnlMixer.add(lblRedPercent);
+		
+		// Label Green Percent
+		lblGreenPercent = new JLabel("78 %");
+		lblGreenPercent.setBounds(115, 400, 100, 24);
+		pnlMixer.add(lblGreenPercent);
+		
+		// Label Blue Percent
+		lblBluePercent = new JLabel("78 %");
+		lblBluePercent.setBounds(200, 400, 100, 24);
+		pnlMixer.add(lblBluePercent);
+		
+		
+		// Text Red DEC Value
+		txtRed = new JLabel(getValueRed() + " ");
+		txtRed.setBounds(30, 400+20, 100, 24);
+		pnlMixer.add(txtRed);
+		
+		// Text Green DEC Value
+		txtGreen = new JLabel(getValueGreen() + " ");
+		txtGreen.setBounds(115, 400+20, 100, 24);
+		pnlMixer.add(txtGreen);
+		
+		// Text Blue DEC Value
+		txtBlue = new JLabel(getValueBlue() + " ");
+		txtBlue.setBounds(200, 400+20, 100, 24);
+		pnlMixer.add(txtBlue);
+	
+
+		// Text Red HEX Value
+		hexRed = new JLabel(Integer.toHexString(getValueRed()) + " ");
+		hexRed.setBounds(30, 400+40, 100, 24);
+		pnlMixer.add(hexRed);
+		
+		// Text Green HEX Value
+		hexGreen = new JLabel(Integer.toHexString(getValueGreen()) + " ");
+		hexGreen.setBounds(115, 400+40, 100, 24);
+		pnlMixer.add(hexGreen);
+
+		// Text Blue HEX Value
+		hexBlue = new JLabel(Integer.toHexString(getValueBlue()) + " ");
+		hexBlue.setBounds(200, 400+40, 100, 24);
+		pnlMixer.add(hexBlue);
+
+		
+		// Label DEC Value
+		txtDec = new JLabel("Dec");
+		txtDec.setBounds(300, 400+20, 100, 24);
+		pnlMixer.add(txtDec);
+
+		// Label HEX Value
+		txtHex = new JLabel("Hex");
+		txtHex.setBounds(300, 400+40, 100, 24);
+		pnlMixer.add(txtHex);	
+
 		// Button Switch Master Log-Linear
 		String btnText = "Linear";
 		btnSwitch = new JButton(btnText);
-		btnSwitch.setBounds(270, lblValueYoffset, buttonWidth, textHeight);
+		btnSwitch.setBounds(270, 400, 90, 24);
 		btnSwitch.setToolTipText("Switch Masterfader");
 		btnSwitch.addActionListener(new ActionListener() {
 			@Override
@@ -204,23 +210,12 @@ public class WindowMixer extends JFrame implements ChangeListener {
 			}
 		});
 		pnlMixer.add(btnSwitch);
-		
-		// Label DEC Value
-		txtDec = new JLabel("Dec");
-		txtDec.setBounds(300, lblValueYoffset+20, 100, textHeight);
-		pnlMixer.add(txtDec);
-
-		// Label HEX Value
-		txtHex = new JLabel("Hex");
-		txtHex.setBounds(300, lblValueYoffset+40, 100, textHeight);
-		pnlMixer.add(txtHex);	
 	}
 	
 
 	public void stateChanged(ChangeEvent evt) {
 		JSlider source;
 		source = (JSlider) evt.getSource();
-		
 		
 		// If change Master Slider
 		if (source.getName().equals("Master")) {
@@ -291,6 +286,7 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		
 		} 
 		
+		
 		// If change RGB sliders
 		else {
 			
@@ -298,45 +294,38 @@ public class WindowMixer extends JFrame implements ChangeListener {
 			if (source.getName().equals("Red")) {
 				setValueRed(source.getValue());
 				txtRed.setText(source.getValue() + " ");
-				hexRed.setText((getValueRed() < 16 ? "0" : "")
-						+ Integer.toHexString(source.getValue()) + " ");
-				lblRedPercent.setText(Integer.toString((getValueRed() * 100) / 255)
-						+ " %");
+				hexRed.setText((getValueRed() < 16 ? "0" : "") + Integer.toHexString(source.getValue()) + " ");
+				lblRedPercent.setText(Integer.toString((getValueRed() * 100) / 255) + " %");
 			}
 			
 			// If changed green slider
 			if (source.getName().equals("Green")) {
 				setValueGreen(source.getValue());
 				txtGreen.setText(source.getValue() + " ");
-				hexGreen.setText((getValueGreen() < 16 ? "0" : "")
-						+ Integer.toHexString(source.getValue()) + " ");
-				lblGreenPercent.setText(Integer.toString((getValueGreen() * 100) / 255)
-						+ " %");
+				hexGreen.setText((getValueGreen() < 16 ? "0" : "") + Integer.toHexString(source.getValue()) + " ");
+				lblGreenPercent.setText(Integer.toString((getValueGreen() * 100) / 255) 	+ " %");
 			}
 			
 			// If changed blue slider
 			if (source.getName().equals("Blue")) {
 				setValueBlue(source.getValue());
 				txtBlue.setText(source.getValue() + " ");
-				hexBlue.setText((getValueBlue() < 16 ? "0" : "")
-						+ Integer.toHexString(source.getValue()) + " ");
-				lblBluePercent.setText(Integer.toString((getValueBlue() * 100) / 255)
-						+ " %");
+				hexBlue.setText((getValueBlue() < 16 ? "0" : "") + Integer.toHexString(source.getValue()) + " ");
+				lblBluePercent.setText(Integer.toString((getValueBlue() * 100) / 255) + " %");
 			}
 			
 			// Set text and slider value
 			setTxtOut((getValueRed() < 16 ? "0" : "") + Integer.toHexString(getValueRed())
 					+ (getValueGreen() < 16 ? "0" : "") + Integer.toHexString(getValueGreen())
 					+ (getValueBlue() < 16 ? "0" : "") + Integer.toHexString(getValueBlue()));
+			
 			PanelOutput.getTxtOutput().setText(String.valueOf(getTxtOut()));
 			getCp().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 			getSldRed().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 			getSldGreen().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
 			getSldBlue().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
-			getSldMaster().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));
-			
+			getSldMaster().setBackground(new Color(getValueRed(), getValueGreen(), getValueBlue()));		
 		}
-		
 	}
 
 	
@@ -353,9 +342,7 @@ public class WindowMixer extends JFrame implements ChangeListener {
 	}
 
 	
-	
 	// Setter Getter
-	
 	public static int getValueRed() {
 		return valueRed;
 	}
@@ -437,5 +424,3 @@ public class WindowMixer extends JFrame implements ChangeListener {
 	}
 
 }
-
-

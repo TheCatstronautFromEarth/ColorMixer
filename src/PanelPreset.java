@@ -13,75 +13,76 @@ import javax.swing.border.EtchedBorder;
 public class PanelPreset {
 	
 	private static JButton btnOpen, btnSave;
-	private static JTextField _fileNameTF  = new JTextField(15);
+	private static JTextField fileNameTF  = new JTextField(15);
 	private static JFileChooser open = new JFileChooser();
 	static JFileChooser save = new JFileChooser();
-	private static Border loweredetched;
-	private static int xoffset = 12, yoffset = 18, buttonWidth = 90, textHeight = 24;
+	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	
 	static void panPreset() {
 
-		// Panel Preset
+		// Panel Presets
 		JPanel pnlPresets = new JPanel();
 		pnlPresets.setLayout(null);
 		pnlPresets.setBounds(15, 15, 230, 80);
-		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 		pnlPresets.setBorder(BorderFactory.createTitledBorder(loweredetched, "Preset"));
 		pnlPresets.setOpaque(false);
 		WindowMixer.getCp().add(pnlPresets);
 
-		// Open File Button
+		// Button Open File 
 		btnOpen = new JButton("Open");
-		btnOpen.setBounds(xoffset, yoffset, buttonWidth, textHeight);
-		btnOpen.setToolTipText("Open file");
-		btnOpen.addActionListener(new ActionListener() {		
-			public void actionPerformed(ActionEvent event) {
-				handlebtnOpen(event);
-			}
-		});
+		btnOpen.setBounds(12, 18, 90, 24);
+		btnOpen.addActionListener(actions);
 		pnlPresets.add(btnOpen);
 	
-		// Save File Button
+		// Button Save File
 		btnSave = new JButton("Save");
-		btnSave.setBounds(110, yoffset, buttonWidth, textHeight);
-		btnSave.setToolTipText("Save file");
-		btnSave.addActionListener(new ActionListener() {		
-			public void actionPerformed(ActionEvent event) {
-				handlebtnSave(event);
-			}
-		});
+		btnSave.setBounds(110, 18, 90, 24);
+		btnSave.addActionListener(actions);
 		pnlPresets.add(btnSave);
 		
 		// Textfield Filename
-		set_fileNameTF(new JTextField());
-		get_fileNameTF().setBounds(xoffset, yoffset+26, 200, textHeight);
-		pnlPresets.add(get_fileNameTF());
+		setfileNameTF(new JTextField());
+		getfileNameTF().setBounds(12, 18+26, 200, 24);
+		pnlPresets.add(getfileNameTF());
 	}
 	
+	
+	// Buttons ActionListener 
+	private static ActionListener actions = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == btnOpen) {
+				openFile();		
+			} else if (e.getSource() == btnSave) {
+				saveFile();
+			}
+		}
+	};
+	
+
 	// Open file
-	protected static void handlebtnOpen(ActionEvent event) {
+	protected static void openFile() {
 		open.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
-		open.addChoosableFileFilter(new MyFilter());
+		open.addChoosableFileFilter(new colorFileFilter());
         int retval = open.showOpenDialog(open);
         if (retval == JFileChooser.APPROVE_OPTION) {
-            //... The user selected a file, get it, use it.
         	File file = open.getSelectedFile();
-
-            //... Update user interface.
-            get_fileNameTF().setText(file.getName());
+            getfileNameTF().setText(file.getName());
             Presets.read(file);
 	    }
 	}
-																
+
+	
 	// Save file
-	protected static void handlebtnSave(ActionEvent event) {
+	protected static void saveFile() {
 		String SaveName;
-		SaveName = get_fileNameTF().getText();
+		SaveName = getfileNameTF().getText();
 		
 		// If TextField empty -> Dafault Name
 		if (SaveName.equals("")) {
 			SaveName = "New_Preset.cmf";
 		}
+		
 		// Set .cmf  (ColerMixerFile)
 		if (!SaveName.endsWith(".cmf")) {
 			SaveName = SaveName + ".cmf";
@@ -91,22 +92,16 @@ public class PanelPreset {
 		save.setSelectedFile(file);
 		int retval = save.showSaveDialog(save);
         save.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        save.addChoosableFileFilter(new MyFilter());
+        save.addChoosableFileFilter(new colorFileFilter());
         if (retval == JFileChooser.APPROVE_OPTION) {
         	String Name = save.getSelectedFile().getName();
         	Presets.write(Name);
 	    }
 	}
-	
-	public static JTextField get_fileNameTF() {
-		return _fileNameTF;
-	}
 
-	public static void set_fileNameTF(JTextField _fileNameTF) {
-		PanelPreset._fileNameTF = _fileNameTF;
-	}
 
-	static class MyFilter extends javax.swing.filechooser.FileFilter {
+	// FileFilter
+	static class colorFileFilter extends javax.swing.filechooser.FileFilter {
 	    public boolean accept(File file) {
 	        String filename = file.getName();
 	        return file.isDirectory() || filename.toLowerCase().endsWith(".cmf");
@@ -114,5 +109,15 @@ public class PanelPreset {
 	    public String getDescription() {
 	        return "*.cmf";
 	    }
+	}
+	
+	
+	// Setter Getter
+	public static JTextField getfileNameTF() {
+		return fileNameTF;
+	}
+
+	public static void setfileNameTF(JTextField fileNameTF) {
+		PanelPreset.fileNameTF = fileNameTF;
 	}
 }
