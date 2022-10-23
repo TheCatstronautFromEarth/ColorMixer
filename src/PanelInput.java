@@ -19,101 +19,100 @@ public class PanelInput {
 
 	private static JButton btnAssume, btnGetClipboard;
 	private static JTextField txtInput;
-	private static JLabel lblOutput;
-	private static Border loweredetched;
+	private static JLabel lblMessage;
+	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private static Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
-	private static int xoffset = 12, yoffset = 18, buttonWidth = 90, textHeight = 24;
 
 	static void panClip() {
 
-		// Panel Mixer
-		JPanel ClipBox = new JPanel();
-		ClipBox.setLayout(null);
-		ClipBox.setBounds(15, 258, 230, 100);
-		ClipBox.setOpaque(false);
-		loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
-		ClipBox.setBorder(BorderFactory.createTitledBorder(loweredetched,
-				"HEX input"));
-		WindowMixer.getCp().add(ClipBox);
+		// Panel Hex Input
+		JPanel pnlInput = new JPanel();
+		pnlInput.setLayout(null);
+		pnlInput.setBounds(15, 258, 230, 100);
+		pnlInput.setOpaque(false);
+		pnlInput.setBorder(BorderFactory.createTitledBorder(loweredetched, "HEX input"));
+		WindowMixer.getCp().add(pnlInput);
 		
-		// Button get value from Clipboard
+		// Button Paste value from Clipboard
 		btnGetClipboard = new JButton("Paste");
-		btnGetClipboard.setBounds(110, yoffset, buttonWidth, textHeight);
-		btnGetClipboard.setMnemonic('g');
-		btnGetClipboard.setToolTipText("Paste from clipboard");
-		btnGetClipboard.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent event) {
-				try {
-					handlebtnGetClipboard(event);
-				} catch (UnsupportedFlavorException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		});
-		ClipBox.add(btnGetClipboard);
+		btnGetClipboard.setBounds(110, 18, 90, 24);
+		btnGetClipboard.addActionListener(actions);
+		pnlInput.add(btnGetClipboard);
 
 		// Button Assume value from Textfield
 		btnAssume = new JButton("Assume");
-		btnAssume.setBounds(xoffset, yoffset + 46, buttonWidth, textHeight);
-		btnAssume.setToolTipText("Assume HEX value");
-		btnAssume.addActionListener(new ActionListener() { 
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						handlebtnAssume(event);
-					}
-				});
-		ClipBox.add(btnAssume);
+		btnAssume.setBounds(12, 64, 90, 24);
+		btnAssume.addActionListener(actions);
+		pnlInput.add(btnAssume);
 		
-		// TextFeld HEX hexInput
+		// TextField HEX hexInput
 		txtInput = new JTextField();
-		txtInput.setBounds(xoffset, yoffset, buttonWidth, textHeight);
-		ClipBox.add(txtInput);
+		txtInput.setBounds(12, 18, 90, 24);
+		pnlInput.add(txtInput);
 		
-		// Label message
-		lblOutput = new JLabel("Enter HEX value");
-		lblOutput.setBounds(xoffset + 10, 40, 400, textHeight);
-		ClipBox.add(lblOutput);
+		// Label Message
+		lblMessage = new JLabel("Enter HEX value");
+		lblMessage.setBounds(22, 40, 400, 24);
+		pnlInput.add(lblMessage);
 	}
 
-	// Get Hex from Clipboard
-	protected static void handlebtnGetClipboard(ActionEvent event)
-			throws UnsupportedFlavorException, IOException {
+	
+	// Buttons ActionListener 
+	private static ActionListener actions = new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == btnGetClipboard) {
+				try {
+					pasteFromClipboard();
+				} catch (UnsupportedFlavorException e1) {
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			} else if (e.getSource() == btnAssume) {
+				checkHexValue();
+			}
+		}
+	};
+	
+	
+	// Paste Hex from Clipboard
+	public static void pasteFromClipboard() throws UnsupportedFlavorException, IOException {
 		Transferable transfer = cb.getContents(null);
-		txtInput.setText((String) transfer
-				.getTransferData(DataFlavor.stringFlavor));
-	}
+		txtInput.setText((String) transfer.getTransferData(DataFlavor.stringFlavor));		
+	}	
 
-	// Text Hex input
-	protected static void handlebtnAssume(ActionEvent event) {
+
+	// Check Hex Input
+	public static void checkHexValue() {
 
 		String hexInput = txtInput.getText();
-		int pruefe = 0;
-		int laenge = hexInput.length();
+		int characters = 0;
+		int txtInputLength = hexInput.length();
 		String message = "";
 
-		if (laenge == 6) {
+		if (txtInputLength == 6) {
 			for (int i = 0; i < 6; i++) {
 				char[] K = hexInput.toCharArray();
 				if ((K[i] >= 'A' && K[i] <= 'F')
 						|| (K[i] >= 'a' && K[i] <= 'f')
 						|| (Character.isDigit(hexInput.charAt(i)))) {
-					pruefe++;
+					characters++;
 				}
 			}
-			if (pruefe == 6) {
+			if (characters == 6) {
 				message = "Accept";
-				pruefe = 0;
 				HexToDec.outputDec(hexInput);
+				characters = 0;
+				
 			} else {
 				message = "Only numbers or A-F";
-				pruefe = 0;
+				characters = 0;
 			}
 		} else {
 			message = "Only 6 digits";
 		}
-		lblOutput.setText(message);
+		lblMessage.setText(message);
 	}
-
+	
 }
