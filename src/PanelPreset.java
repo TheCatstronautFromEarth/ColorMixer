@@ -41,9 +41,9 @@ public class PanelPreset {
 		pnlPresets.add(btnSave);
 		
 		// Textfield Filename
-		setfileNameTF(new JTextField());
-		getfileNameTF().setBounds(12, 18+26, 200, 24);
-		pnlPresets.add(getfileNameTF());
+		fileNameTF = new JTextField();
+		fileNameTF.setBounds(12, 18+26, 200, 24);
+		pnlPresets.add(fileNameTF);
 	}
 	
 	
@@ -67,7 +67,7 @@ public class PanelPreset {
         int retval = open.showOpenDialog(open);
         if (retval == JFileChooser.APPROVE_OPTION) {
         	File file = open.getSelectedFile();
-            getfileNameTF().setText(file.getName());
+            fileNameTF.setText(file.getName());
             Presets.read(file);
 	    }
 	}
@@ -76,7 +76,7 @@ public class PanelPreset {
 	// Save file
 	protected static void saveFile() {
 		String SaveName;
-		SaveName = getfileNameTF().getText();
+		SaveName = fileNameTF.getText();
 		
 		// If TextField empty -> Dafault Name
 		if (SaveName.equals("")) {
@@ -112,12 +112,9 @@ public class PanelPreset {
 	}
 	
 	
-	// Setter Getter
+	// Getter
 	public static JTextField getfileNameTF() {
 		return fileNameTF;
 	}
 
-	public static void setfileNameTF(JTextField fileNameTF) {
-		PanelPreset.fileNameTF = fileNameTF;
-	}
 }

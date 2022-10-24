@@ -34,8 +34,8 @@ public class PanelOutput {
 		pnlOutput.add(btnSetClipboard);
 
 		// TextField HEX output
-		setTxtOutput(new JTextField());
-		getTxtOutput().setBounds(110, 18, 90, 24);
+		txtOutput = new JTextField();
+		txtOutput.setBounds(110, 18, 90, 24);
 		WindowMixer.setTxtOut((
 				WindowMixer.getValueRed() < 16 ? "0" : "")
 				+ Integer.toHexString(WindowMixer.getValueRed())
@@ -43,8 +43,8 @@ public class PanelOutput {
 				+ Integer.toHexString(WindowMixer.getValueGreen())
 				+ (WindowMixer.getValueBlue() < 16 ? "0" : "")
 				+ Integer.toHexString(WindowMixer.getValueBlue()));
-		getTxtOutput().setText(String.valueOf(WindowMixer.getTxtOut()));
-		pnlOutput.add(getTxtOutput());
+		txtOutput.setText(String.valueOf(WindowMixer.getTxtOut()));
+		pnlOutput.add(txtOutput);
 	}
 
 	
@@ -52,18 +52,15 @@ public class PanelOutput {
 	private static ActionListener copyAction = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			StringSelection stringSelection = new StringSelection(getTxtOutput().getText());
+			StringSelection stringSelection = new StringSelection(txtOutput.getText());
 			cb.setContents(stringSelection, null);
 		}
 	};
 
 	
-	// Setter Getter
+	// Getter
 	public static JTextField getTxtOutput() {
 		return txtOutput;
 	}
 
-	public static void setTxtOutput(JTextField txtOutput) {
-		PanelOutput.txtOutput = txtOutput;
-	}
 }

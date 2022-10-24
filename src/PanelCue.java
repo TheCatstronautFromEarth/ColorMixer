@@ -57,39 +57,39 @@ public class PanelCue {
 
 		
 		// Cue ColorThumbnails
-		setLblCue01Thumb(new JLabel());
-		getLblCue01Thumb().setBounds(105, 50, 50, 20);
-		pnlCue.add(getLblCue01Thumb());
+		lblCue01Thumb = new JLabel();
+		lblCue01Thumb.setBounds(105, 50, 50, 20);
+		pnlCue.add(lblCue01Thumb);
 		
-		setLblCue02Thumb(new JLabel());
-		getLblCue02Thumb().setBounds(105, 75, 50, 20);
-		pnlCue.add(getLblCue02Thumb());
+		lblCue02Thumb = new JLabel();
+		lblCue02Thumb.setBounds(105, 75, 50, 20);
+		pnlCue.add(lblCue02Thumb);
 		
-		setLblCue03Thumb(new JLabel());
-		getLblCue03Thumb().setBounds(105, 100, 50, 20);
-		pnlCue.add(getLblCue03Thumb());
+		lblCue03Thumb = new JLabel();
+		lblCue03Thumb.setBounds(105, 100, 50, 20);
+		pnlCue.add(lblCue03Thumb);
 		
-		setLblCue04Thumb(new JLabel());
-		getLblCue04Thumb().setBounds(105, 125, 50, 20);
-		pnlCue.add(getLblCue04Thumb());
+		lblCue04Thumb = new JLabel();
+		lblCue04Thumb.setBounds(105, 125, 50, 20);
+		pnlCue.add(lblCue04Thumb);
 
 		
 		// Cue Hex Test Label
-		setLblCue01(new JLabel("-free-"));
-		getLblCue01().setBounds(160, 50, 80, 20);
-		pnlCue.add(getLblCue01());
+		lblCue01 = new JLabel("-free-");
+		lblCue01.setBounds(160, 50, 80, 20);
+		pnlCue.add(lblCue01);
 		
-		setLblCue02(new JLabel("-free-"));
-		getLblCue02().setBounds(160, 75, 80, 20);
-		pnlCue.add(getLblCue02());
+		lblCue02 = new JLabel("-free-");
+		lblCue02.setBounds(160, 75, 80, 20);
+		pnlCue.add(lblCue02);
 		
-		setLblCue03(new JLabel("-free-"));
-		getLblCue03().setBounds(160, 100, 80, 20);
-		pnlCue.add(getLblCue03());
+		lblCue03 = new JLabel("-free-");
+		lblCue03.setBounds(160, 100, 80, 20);
+		pnlCue.add(lblCue03);
 		
-		setLblCue04(new JLabel("-free-"));
-		getLblCue04().setBounds(160, 125, 80, 20);
-		pnlCue.add(getLblCue04());
+		lblCue04 = new JLabel("-free-");
+		lblCue04.setBounds(160, 125, 80, 20);
+		pnlCue.add(lblCue04);
 	}
 
 	
@@ -128,21 +128,21 @@ public class PanelCue {
 		valueHexBlue = Integer.parseInt(hexValue.substring(4, 6), 16);
 		
 		if (btnSource == btnCue01) {
-			getLblCue01().setText(hexValue);
-			getLblCue01Thumb().setOpaque(true);
-			getLblCue01Thumb().setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
+			lblCue01.setText(hexValue);
+			lblCue01Thumb.setOpaque(true);
+			lblCue01Thumb.setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
 		} else if (btnSource == btnCue02) {
-			getLblCue02().setText(hexValue);
-			getLblCue02Thumb().setOpaque(true);
-			getLblCue02Thumb().setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
+			lblCue02.setText(hexValue);
+			lblCue02Thumb.setOpaque(true);
+			lblCue02Thumb.setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
 		} else if (btnSource == btnCue03) {
-			getLblCue03().setText(hexValue);
-			getLblCue03Thumb().setOpaque(true);
-			getLblCue03Thumb().setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
+			lblCue03.setText(hexValue);
+			lblCue03Thumb.setOpaque(true);
+			lblCue03Thumb.setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
 		} else if (btnSource == btnCue04) {
-			getLblCue04().setText(hexValue);
-			getLblCue04Thumb().setOpaque(true);
-			getLblCue04Thumb().setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
+			lblCue04.setText(hexValue);
+			lblCue04Thumb.setOpaque(true);
+			lblCue04Thumb.setBackground(new Color(valueHexRed, valueHexGreen, valueHexBlue));
 		}
 	}
 
@@ -150,88 +150,56 @@ public class PanelCue {
 	// Call Cue
 	public static void callCue(Object btnSource) {
 		if (btnSource == btnCue01) {
-			if (!getLblCue01().getText().equals("-free-")) {
-				HexToDec.outputDec(getLblCue01().getText());
+			if (!lblCue01.getText().equals("-free-")) {
+				HexToDec.outputDec(lblCue01.getText());
 			}
 		} else if (btnSource == btnCue02) {
-			if (!getLblCue02().getText().equals("-free-")) {
-				HexToDec.outputDec(getLblCue02().getText());
+			if (!lblCue02.getText().equals("-free-")) {
+				HexToDec.outputDec(lblCue02.getText());
 			}
 		} else if (btnSource == btnCue03) {
-
-			if (!getLblCue03().getText().equals("-free-")) {
-				HexToDec.outputDec(getLblCue03().getText());
+			if (!lblCue03.getText().equals("-free-")) {
+				HexToDec.outputDec(lblCue03.getText());
 			}
 		} else if (btnSource == btnCue04) {
-			if (!getLblCue04().getText().equals("-free-")) {
-				HexToDec.outputDec(getLblCue04().getText());
+			if (!lblCue04.getText().equals("-free-")) {
+				HexToDec.outputDec(lblCue04.getText());
 			}
 		}
 	}
 
 	
-	// Setter Getter
+	// Getter
 	public static JLabel getLblCue01Thumb() {
 		return lblCue01Thumb;
-	}
-
-	public static void setLblCue01Thumb(JLabel lblCue01Thumb) {
-		PanelCue.lblCue01Thumb = lblCue01Thumb;
 	}
 
 	public static JLabel getLblCue02Thumb() {
 		return lblCue02Thumb;
 	}
 
-	public static void setLblCue02Thumb(JLabel lblCue02Thumb) {
-		PanelCue.lblCue02Thumb = lblCue02Thumb;
-	}
-
 	public static JLabel getLblCue03Thumb() {
 		return lblCue03Thumb;
-	}
-
-	public static void setLblCue03Thumb(JLabel lblCue03Thumb) {
-		PanelCue.lblCue03Thumb = lblCue03Thumb;
 	}
 
 	public static JLabel getLblCue04Thumb() {
 		return lblCue04Thumb;
 	}
 
-	public static void setLblCue04Thumb(JLabel lblCue04Thumb) {
-		PanelCue.lblCue04Thumb = lblCue04Thumb;
-	}
-
 	public static JLabel getLblCue01() {
 		return lblCue01;
-	}
-
-	public static void setLblCue01(JLabel lblCue01) {
-		PanelCue.lblCue01 = lblCue01;
 	}
 
 	public static JLabel getLblCue02() {
 		return lblCue02;
 	}
 
-	public static void setLblCue02(JLabel lblCue02) {
-		PanelCue.lblCue02 = lblCue02;
-	}
-
 	public static JLabel getLblCue03() {
 		return lblCue03;
-	}
-
-	public static void setLblCue03(JLabel lblCue03) {
-		PanelCue.lblCue03 = lblCue03;
 	}
 
 	public static JLabel getLblCue04() {
 		return lblCue04;
 	}
 
-	public static void setLblCue04(JLabel lblCue04) {
-		PanelCue.lblCue04 = lblCue04;
-	}
 }

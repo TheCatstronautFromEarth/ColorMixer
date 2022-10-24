@@ -16,7 +16,7 @@ public class Presets {
 			BufferedReader in = new BufferedReader(new FileReader(file));
 			String row = null;
 			int i = 0;
-			int CueNummer[] = new int[20];
+			int CueNumber[] = new int[20];
 			int red[] = new int[20];
 			int green[] = new int[20];
 			int blue[] = new int[20];
@@ -28,27 +28,27 @@ public class Presets {
 
 				if (!valueHex[i].equals("-free-")) {
 
-					CueNummer[i] = Integer.parseInt(row.substring(0, 2));
+					CueNumber[i] = Integer.parseInt(row.substring(0, 2));
 					red[i] = Integer.parseInt(row.substring(3, 5), 16);
 					green[i] = Integer.parseInt(row.substring(5, 7), 16);
 					blue[i] = Integer.parseInt(row.substring(7, 9), 16);
 
-					if (CueNummer[i] == 1) {
+					if (CueNumber[i] == 1) {
 						PanelCue.getLblCue01().setText(valueHex[i]);
 						PanelCue.getLblCue01Thumb().setOpaque(true);
 						PanelCue.getLblCue01Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
-					if (CueNummer[i] == 2) {
+					if (CueNumber[i] == 2) {
 						PanelCue.getLblCue02().setText(valueHex[i]);
 						PanelCue.getLblCue02Thumb().setOpaque(true);
 						PanelCue.getLblCue02Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
-					if (CueNummer[i] == 3) {
+					if (CueNumber[i] == 3) {
 						PanelCue.getLblCue03().setText(valueHex[i]);
 						PanelCue.getLblCue03Thumb().setOpaque(true);
 						PanelCue.getLblCue03Thumb().setBackground(new Color(red[i], green[i], blue[i]));
 					}
-					if (CueNummer[i] == 4) {
+					if (CueNumber[i] == 4) {
 						PanelCue.getLblCue04().setText(valueHex[i]);
 						PanelCue.getLblCue04Thumb().setOpaque(true);
 						PanelCue.getLblCue04Thumb().setBackground(new Color(red[i], green[i], blue[i]));
@@ -79,18 +79,18 @@ public class Presets {
 			File saveFile = new File(pfad + "/" + file);
 			FileWriter fw = null;
 			if (saveFile.exists()) {
-				int antwort = JOptionPane.showConfirmDialog(null,
+				int answer = JOptionPane.showConfirmDialog(null,
 						"File already exists. Overwrite?", "Alert",
 						JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.WARNING_MESSAGE);
 
-				if (antwort == JOptionPane.OK_OPTION) {
+				if (answer == JOptionPane.OK_OPTION) {
 					writable = true;
-				} else if (antwort == JOptionPane.NO_OPTION) {
+				} else if (answer == JOptionPane.NO_OPTION) {
 					writable = false;
-				} else if (antwort == JOptionPane.CANCEL_OPTION) {
+				} else if (answer == JOptionPane.CANCEL_OPTION) {
 					writable = false;
-				} else if (antwort == JOptionPane.CLOSED_OPTION) {
+				} else if (answer == JOptionPane.CLOSED_OPTION) {
 					writable = false;
 				}
 			} else {
