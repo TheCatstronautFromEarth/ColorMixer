@@ -23,9 +23,7 @@ public class Presets {
 			String valueHex[] = new String[20];
 
 			while ((row = in.readLine()) != null) {
-
 				valueHex[i] = row.substring(3, 9);
-
 				if (!valueHex[i].equals("-free-")) {
 
 					CueNumber[i] = Integer.parseInt(row.substring(0, 2));
@@ -56,14 +54,12 @@ public class Presets {
 				}
 				
 				i++;
-			
 			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-
 	
 	public static void write(String file) {
 		int i;

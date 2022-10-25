@@ -46,7 +46,6 @@ public class PanelPreset {
 		pnlPresets.add(fileNameTF);
 	}
 	
-	
 	// Buttons ActionListener 
 	private static ActionListener actions = new ActionListener() {
 		@Override
@@ -58,7 +57,6 @@ public class PanelPreset {
 			}
 		}
 	};
-	
 
 	// Open file
 	protected static void openFile() {
@@ -72,22 +70,18 @@ public class PanelPreset {
 	    }
 	}
 
-	
 	// Save file
 	protected static void saveFile() {
 		String SaveName;
 		SaveName = fileNameTF.getText();
-		
 		// If TextField empty -> Dafault Name
 		if (SaveName.equals("")) {
 			SaveName = "New_Preset.cmf";
 		}
-		
 		// Set .cmf  (ColerMixerFile)
 		if (!SaveName.endsWith(".cmf")) {
 			SaveName = SaveName + ".cmf";
 		}
-		
 		File file = new File(SaveName);
 		save.setSelectedFile(file);
 		int retval = save.showSaveDialog(save);
@@ -98,7 +92,6 @@ public class PanelPreset {
         	Presets.write(Name);
 	    }
 	}
-
 
 	// FileFilter
 	static class colorFileFilter extends javax.swing.filechooser.FileFilter {
@@ -111,10 +104,8 @@ public class PanelPreset {
 	    }
 	}
 	
-	
 	// Getter
 	public static JTextField getfileNameTF() {
 		return fileNameTF;
 	}
-
 }
