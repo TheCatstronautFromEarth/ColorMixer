@@ -24,6 +24,6 @@ Future ideas:
 
 Updates:
 
-29.10.2022 - Version 1.2 released (add disable Buttons when the Cue value is empty. Optimized source code)
+29.10.2022 - Version 1.2 released (Disable Buttons when the Cue value is empty. Optimized source code)
 
 26.10.2022 - Version 1.1 released (Optimized source code)
