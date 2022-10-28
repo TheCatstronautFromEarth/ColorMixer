@@ -21,3 +21,7 @@ Future ideas:
 
 
 ![Screen1](https://user-images.githubusercontent.com/116021405/197399214-24a8e41f-3daf-4482-a39a-c1dd17ba8612.png)
+
+Updates:
+29.10.2022 - Version 1.2 released (add disable Buttons when the Cue value is empty. Optimized source code)
+26.10.2022 - Version 1.1 released (Optimized source code)
