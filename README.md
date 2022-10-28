@@ -16,7 +16,7 @@ On Windows/Linux the fader only jumps one value in the direction where you click
 Future ideas:
 - Implementing a pointer that picks up every color on the desktop
 - More cue settings
-- Controlling SmartHome WLAN lights with Tuya
+- Controlling SmartHome WLAN lights with Tuya (JSON, MQTT)
 - Controlling DMX lights over WLAN using an ESP8266
 
 
