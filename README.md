@@ -1,6 +1,6 @@
 # ColorMixer
 
-Hey community
+Hey community,
 
 I work as a web designer and sometimes I need some graded colors. So I made myself a little tool: The ColorMixer.
 It works very well. But I taught myself JAVA and I don't know if it is compliant programming.
