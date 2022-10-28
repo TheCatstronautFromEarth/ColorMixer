@@ -20,10 +20,11 @@ Future ideas:
 - Controlling DMX lights over WLAN using an ESP8266
 
 
-![Screen1](https://user-images.githubusercontent.com/116021405/197399214-24a8e41f-3daf-4482-a39a-c1dd17ba8612.png)
+![ColorMixer1 2](https://user-images.githubusercontent.com/116021405/198749344-c676621e-9046-4dbc-9031-b305eb3a5894.png)
 
 Updates:
 
 29.10.2022 - Version 1.2 released (Disable Buttons when the Cue value is empty. Optimized source code)
 
 26.10.2022 - Version 1.1 released (Optimized source code)
+
