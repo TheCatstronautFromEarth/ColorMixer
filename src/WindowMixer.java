@@ -211,10 +211,12 @@ public class WindowMixer extends JFrame implements ChangeListener {
 		if (source.getName().equals("Master")) {
 			intOldMasterValue = intMasterValue;
 			intMasterValue = source.getValue();
+			
 			// If Masterfader moves up
 			if (intOldMasterValue < intMasterValue) {
 				masterSliderUp(MasterLinear);
 			}
+			
 			// If Masterfader moves down
 			if (intOldMasterValue > intMasterValue) {
 				masterSliderDown(MasterLinear);
@@ -271,7 +273,7 @@ public class WindowMixer extends JFrame implements ChangeListener {
 
 	private void blueSliderChange() {
 		lblDecBlue.setText(Integer.toString(intValueBlue)); 				// Label Blue Dec
-		lblHexBlue.setText(Integer.toHexString(intValueBlue));				// Label Blue Hex																// value
+		lblHexBlue.setText(Integer.toHexString(intValueBlue));				// Label Blue Hex										
 		lblPercentBlue.setText(Functions.DecToPercent(intValueBlue));		// Label Blue Percent
 	}
 

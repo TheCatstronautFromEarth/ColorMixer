@@ -36,6 +36,9 @@ public class PanelOutput {
 		// TextField HEX output
 		txtOutput = new JTextField();
 		txtOutput.setBounds(110, 18, 90, 24);
+		
+		
+		// !!!!
 		WindowMixer.setStrHexOut((
 				WindowMixer.getIntValueRed() < 16 ? "0" : "")
 				+ Integer.toHexString(WindowMixer.getIntValueRed())
@@ -44,6 +47,7 @@ public class PanelOutput {
 				+ (WindowMixer.getIntValueBlue() < 16 ? "0" : "")
 				+ Integer.toHexString(WindowMixer.getIntValueBlue()));
 		txtOutput.setText(String.valueOf(WindowMixer.getStrHexOut()));
+		
 		pnlOutput.add(txtOutput);
 	}
 

@@ -51,7 +51,7 @@ public class Functions {
 		Red = Integer.parseInt(StrHexCode.substring(0,2), 16);
 		Green = Integer.parseInt(StrHexCode.substring(2,4), 16);
 		Blue = Integer.parseInt(StrHexCode.substring(4,6), 16);
-		
+
 		WindowMixer.getSldRed().setValue(Red);
 		WindowMixer.getSldGreen().setValue(Green);
 		WindowMixer.getSldBlue().setValue(Blue);

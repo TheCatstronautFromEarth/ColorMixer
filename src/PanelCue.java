@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,21 +37,25 @@ public class PanelCue {
 		// Button Cue 1
 		btnCue01 = new JButton("Cue 1");
 		btnCue01.setBounds(12, 48, 90, 24);
+		btnCue01.setEnabled(false);
 		btnCue01.addActionListener(actions);
 		pnlCue.add(btnCue01);
 		// Button Cue 2
 		btnCue02 = new JButton("Cue 2");
 		btnCue02.setBounds(12, 73, 90, 24);
+		btnCue02.setEnabled(false);
 		btnCue02.addActionListener(actions);
 		pnlCue.add(btnCue02);
 		// Button Cue 3
 		btnCue03 = new JButton("Cue 3");
 		btnCue03.setBounds(12, 98, 90, 24);
+		btnCue03.setEnabled(false);
 		btnCue03.addActionListener(actions);
 		pnlCue.add(btnCue03);
 		// Button Cue 4
 		btnCue04 = new JButton("Cue 4");
 		btnCue04.setBounds(12, 123, 90, 24);
+		btnCue04.setEnabled(false);
 		btnCue04.addActionListener(actions);
 		pnlCue.add(btnCue04);
 		
@@ -93,28 +98,53 @@ public class PanelCue {
 	private static ActionListener actions = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			
 			Object btnSource = e.getSource();
+			
 			if (cueSelect) {
-				btnSetToCue.setForeground(new Color(0, 0, 0));
+				btnSetToCue.setForeground(Color.BLACK);
 				btnSetToCue.setText("Set To");
+				
+				if (lblCue01.getText().equals("-free-")) {
+					btnCue01.setEnabled(false);
+				}
+				
+				if (lblCue02.getText().equals("-free-")) {
+					btnCue02.setEnabled(false);
+				}
+				
+				if (lblCue03.getText().equals("-free-")) {
+					btnCue03.setEnabled(false);
+				}
+				
+				if (lblCue04.getText().equals("-free-")) {
+					btnCue04.setEnabled(false);
+				}
+				
 				setCue(btnSource);
 				cueSelect = false;
 			} else {
 				if (btnSource == btnSetToCue) {
-					btnSetToCue.setForeground(new Color(255, 0, 0));
+					btnSetToCue.setForeground(Color.RED);
 					btnSetToCue.setText("Choose..");
+
+					btnCue01.setEnabled(true);
+					btnCue02.setEnabled(true);
+					btnCue03.setEnabled(true);
+					btnCue04.setEnabled(true);
+					
 					cueSelect = true;
 				} else {
 					callCue(btnSource);
 				}
 			}
+			
 		}
 	};
 
 	// Set Cue
 	public static void setCue(Object btnSource) {
-		String hexValue;
-		hexValue = PanelOutput.getTxtOutput().getText();
+		String hexValue = PanelOutput.getTxtOutput().getText();
 		valueHexRed = Integer.parseInt(hexValue.substring(0, 2), 16);
 		valueHexGreen = Integer.parseInt(hexValue.substring(2, 4), 16);
 		valueHexBlue = Integer.parseInt(hexValue.substring(4, 6), 16);
@@ -125,43 +155,52 @@ public class PanelCue {
 			lblCue01.setText(hexValue);
 			lblCue01Thumb.setOpaque(true);
 			lblCue01Thumb.setBackground(color);
+			btnCue01.setEnabled(true);
 		} else if (btnSource == btnCue02) {
 			lblCue02.setText(hexValue);
 			lblCue02Thumb.setOpaque(true);
 			lblCue02Thumb.setBackground(color);
+			btnCue02.setEnabled(true);
 		} else if (btnSource == btnCue03) {
 			lblCue03.setText(hexValue);
 			lblCue03Thumb.setOpaque(true);
 			lblCue03Thumb.setBackground(color);
+			btnCue03.setEnabled(true);
 		} else if (btnSource == btnCue04) {
 			lblCue04.setText(hexValue);
 			lblCue04Thumb.setOpaque(true);
 			lblCue04Thumb.setBackground(color);
+			btnCue04.setEnabled(true);
 		}
 	}
 	
 	// Call Cue
 	public static void callCue(Object btnSource) {
 		if (btnSource == btnCue01) {
-			if (!lblCue01.getText().equals("-free-")) {
-				Functions.HexToDec(lblCue01.getText());
-			}
+				Functions.HexToDec(lblCue01.getText());			
 		} else if (btnSource == btnCue02) {
-			if (!lblCue02.getText().equals("-free-")) {
-				Functions.HexToDec(lblCue02.getText());
-			}
+				Functions.HexToDec(lblCue02.getText());			
 		} else if (btnSource == btnCue03) {
-			if (!lblCue03.getText().equals("-free-")) {
 				Functions.HexToDec(lblCue03.getText());
-			}
 		} else if (btnSource == btnCue04) {
-			if (!lblCue04.getText().equals("-free-")) {
 				Functions.HexToDec(lblCue04.getText());
-			}
-		}
+		}		
 	}
 	
 	// Getter
+	public static JButton getBtnCue01() {
+		return btnCue01;
+	}
+	public static JButton getBtnCue02() {
+		return btnCue02;
+	}
+	public static JButton getBtnCue03() {
+		return btnCue03;
+	}
+	public static JButton getBtnCue04() {
+		return btnCue04;
+	}
+	
 	public static JLabel getLblCue01Thumb() {
 		return lblCue01Thumb;
 	}
@@ -174,6 +213,7 @@ public class PanelCue {
 	public static JLabel getLblCue04Thumb() {
 		return lblCue04Thumb;
 	}
+	
 	public static JLabel getLblCue01() {
 		return lblCue01;
 	}
@@ -186,4 +226,5 @@ public class PanelCue {
 	public static JLabel getLblCue04() {
 		return lblCue04;
 	}
+
 }

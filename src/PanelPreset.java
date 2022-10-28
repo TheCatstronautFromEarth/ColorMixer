@@ -66,7 +66,7 @@ public class PanelPreset {
         if (retval == JFileChooser.APPROVE_OPTION) {
         	File file = open.getSelectedFile();
             fileNameTF.setText(file.getName());
-            Presets.read(file);
+            DiscIO.read(file);
 	    }
 	}
 
@@ -89,7 +89,7 @@ public class PanelPreset {
         save.addChoosableFileFilter(new colorFileFilter());
         if (retval == JFileChooser.APPROVE_OPTION) {
         	String Name = save.getSelectedFile().getName();
-        	Presets.write(Name);
+        	DiscIO.write(Name);
 	    }
 	}
 
