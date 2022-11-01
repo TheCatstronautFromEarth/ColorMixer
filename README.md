@@ -19,8 +19,7 @@ Future ideas:
 - Controlling SmartHome WLAN lights with Tuya (JSON, MQTT)
 - Controlling DMX lights over WLAN using an ESP8266
 
-
-![ColorMixer1 2](https://user-images.githubusercontent.com/116021405/198749344-c676621e-9046-4dbc-9031-b305eb3a5894.png)
+![ColorMixer1 3](https://user-images.githubusercontent.com/116021405/199245645-3c052f20-6c3f-46f3-881e-42bbeb59abbf.png)
 
 Updates:
 
