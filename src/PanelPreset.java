@@ -2,57 +2,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 public class PanelPreset {
 	
-	private static JButton btnOpen, btnSave;
+	private static JButton[] buttonArray = new JButton[2];
 	private static JTextField fileNameTF  = new JTextField(15);
 	private static JFileChooser open = new JFileChooser();
 	static JFileChooser save = new JFileChooser();
-	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	
 	static void panPreset() {
-
-		// Panel Presets
-		JPanel pnlPresets = new JPanel();
-		pnlPresets.setLayout(null);
-		pnlPresets.setBounds(15, 15, 230, 80);
-		pnlPresets.setBorder(BorderFactory.createTitledBorder(loweredetched, "Preset"));
-		pnlPresets.setOpaque(false);
-		WindowMixer.getCp().add(pnlPresets);
-
-		// Button Open File 
-		btnOpen = new JButton("Open");
-		btnOpen.setBounds(12, 18, 90, 24);
-		btnOpen.addActionListener(actions);
-		pnlPresets.add(btnOpen);
-	
-		// Button Save File
-		btnSave = new JButton("Save");
-		btnSave.setBounds(110, 18, 90, 24);
-		btnSave.addActionListener(actions);
-		pnlPresets.add(btnSave);
+		
+		// Buttons
+		String[] buttonNames = {"Open", "Save"};
+		int[] xOffsetButton = {15, 110};
+		for (int i = 0; i < buttonArray.length; i++) {
+			buttonArray[i] = new JButton(buttonNames[i]);
+			buttonArray[i].setBounds(xOffsetButton[i], 18, 90, 26);
+			buttonArray[i].addActionListener(actions);
+			WindowMixer.getPanelArray()[1].add(buttonArray[i]);
+		}
 		
 		// Textfield Filename
 		fileNameTF = new JTextField();
-		fileNameTF.setBounds(12, 18+26, 200, 24);
-		pnlPresets.add(fileNameTF);
+		fileNameTF.setBounds(230, 18, 200, 24);
+		WindowMixer.getPanelArray()[1].add(fileNameTF);
 	}
 	
 	// Buttons ActionListener 
 	private static ActionListener actions = new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == btnOpen) {
+			if (e.getSource() == buttonArray[0]) {
 				openFile();		
-			} else if (e.getSource() == btnSave) {
+			} else if (e.getSource() == buttonArray[1]) {
 				saveFile();
 			}
 		}

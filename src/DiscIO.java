@@ -20,64 +20,24 @@ public class DiscIO {
 			int green[] = new int[20];
 			int blue[] = new int[20];
 			String valueHex[] = new String[20];
-
 			while ((row = in.readLine()) != null) {
 				valueHex[i] = row.substring(3, 9);
-
-				System.out.println("DS: " + valueHex[i] + " " +i);
-
 				if (!valueHex[i].equals("-free-")) {
 					red[i] = Integer.parseInt(row.substring(3, 5), 16);
 					green[i] = Integer.parseInt(row.substring(5, 7), 16);
 					blue[i] = Integer.parseInt(row.substring(7, 9), 16);
+					PanelCue.getLabelHexArray()[i-1].setText(valueHex[i]);
+					PanelCue.getLabelThumbArray()[i-1].setOpaque(true);
+					PanelCue.getLabelThumbArray()[i-1].setBackground(new Color(red[i], green[i], blue[i]));
+					PanelCue.getButtonArray()[i-1].setEnabled(true);
+				} else {
+					PanelCue.getLabelHexArray()[i-1].setText("-free-");
+					PanelCue.getLabelThumbArray()[i-1].setBackground(new Color(PanelMixer.getIntValue()[0], PanelMixer.getIntValue()[1], PanelMixer.getIntValue()[2]));
+					PanelCue.getLabelThumbArray()[i-1].setOpaque(false);
+					PanelCue.getButtonArray()[i-1].setEnabled(false);
 				}
-				
-				Color color = new Color(red[i], green[i], blue[i]);
-				
-				if (i == 1) {
-					if (!valueHex[i].equals("-free-")) {
-						PanelCue.getLblCue01().setText(valueHex[i]);
-						PanelCue.getLblCue01Thumb().setOpaque(true);
-						PanelCue.getLblCue01Thumb().setBackground(color);
-						PanelCue.getBtnCue01().setEnabled(true);
-					} else {
-						PanelCue.getBtnCue01().setEnabled(false);
-					}
-				}
-				if (i == 2) {
-					if (!valueHex[i].equals("-free-")) {
-						PanelCue.getLblCue02().setText(valueHex[i]);
-						PanelCue.getLblCue02Thumb().setOpaque(true);
-						PanelCue.getLblCue02Thumb().setBackground(color);
-						PanelCue.getBtnCue02().setEnabled(true);
-					} else {
-						PanelCue.getBtnCue02().setEnabled(false);
-					}
-				}
-				if (i == 3) {
-					if (!valueHex[i].equals("-free-")) {
-						PanelCue.getLblCue03().setText(valueHex[i]);
-						PanelCue.getLblCue03Thumb().setOpaque(true);
-						PanelCue.getLblCue03Thumb().setBackground(color);
-						PanelCue.getBtnCue03().setEnabled(true);
-					} else {
-						PanelCue.getBtnCue03().setEnabled(false);
-					}
-				}
-				if (i == 4) {
-					if (!valueHex[i].equals("-free-")) {
-						PanelCue.getLblCue04().setText(valueHex[i]);
-						PanelCue.getLblCue04Thumb().setOpaque(true);
-						PanelCue.getLblCue04Thumb().setBackground(color);
-						PanelCue.getBtnCue04().setEnabled(true);
-					} else {
-						PanelCue.getBtnCue04().setEnabled(false);
-					}
-				}
-				
 				i++;
 			}
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -86,11 +46,11 @@ public class DiscIO {
 	public static void write(String file) {
 		int i;
 		boolean writable = false;
-		String[] row = new String[20];
-		row[0] = "01:" + PanelCue.getLblCue01().getText();
-		row[1] = "02:" + PanelCue.getLblCue02().getText();
-		row[2] = "03:" + PanelCue.getLblCue03().getText();
-		row[3] = "04:" + PanelCue.getLblCue04().getText();
+		String[] row = new String[4];
+		row[0] = "01:" + PanelCue.getLabelHexArray()[0].getText();
+		row[1] = "02:" + PanelCue.getLabelHexArray()[1].getText();
+		row[2] = "03:" + PanelCue.getLabelHexArray()[2].getText();
+		row[3] = "04:" + PanelCue.getLabelHexArray()[3].getText();
 
 		try {
 			File pfad = PanelPreset.save.getCurrentDirectory();
@@ -115,7 +75,7 @@ public class DiscIO {
 				writable = true;
 			}
 
-			if (writable == true) {
+			if (writable) {
 				fw = new FileWriter(saveFile.getPath(), false);
 				PrintWriter pw = new PrintWriter(fw);
 				for (i = 0; i <= 3; i++) {

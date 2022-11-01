@@ -36,7 +36,7 @@ public class Functions {
 				HexToDec(hexInput);
 				characters = 0;
 			} else {
-				message = "Only numbers or A-F";
+				message = "Only 0-9 or A-F";
 				characters = 0;
 			}
 		} else {
@@ -52,9 +52,9 @@ public class Functions {
 		Green = Integer.parseInt(StrHexCode.substring(2,4), 16);
 		Blue = Integer.parseInt(StrHexCode.substring(4,6), 16);
 
-		WindowMixer.getSldRed().setValue(Red);
-		WindowMixer.getSldGreen().setValue(Green);
-		WindowMixer.getSldBlue().setValue(Blue);
+		PanelMixer.getSliderArray()[0].setValue(Red);
+		PanelMixer.getSliderArray()[1].setValue(Green);
+		PanelMixer.getSliderArray()[2].setValue(Blue);
 		
 		return new Color(Red, Green, Blue);
 	}
@@ -63,5 +63,21 @@ public class Functions {
 	public static String DecToPercent(int value) {
 		String percent = (Integer.toString((value * 100) / 255) + " %");	
 		return percent;
+	}
+
+	public static String makeHexStr(int r, int g, int b) {
+		String strHexOut = (r < 16 ? "0" : "")
+				+ Integer.toHexString(r)
+				+ (g < 16 ? "0" : "")
+				+ Integer.toHexString(g)
+				+ (b < 16 ? "0" : "")
+				+ Integer.toHexString(b);
+		return strHexOut;
+	}
+	
+	public static String makeHexValStr(int col) {
+		String strHexVal = (col < 16 ? "0" : "") + Integer.toHexString(col);
+		return strHexVal;
+		
 	}
 }
