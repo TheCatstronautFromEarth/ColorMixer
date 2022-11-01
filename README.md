@@ -24,6 +24,8 @@ Future ideas:
 
 Updates:
 
+1.11.2022 - Version 1.3 released (Revision of the GUI using BorderLayout. Packed the JPanel, JButton, JLabel, ect. into arrays to shorten the source code.)
+
 29.10.2022 - Version 1.2 released (Disable Buttons when the Cue value is empty. Optimized source code)
 
 26.10.2022 - Version 1.1 released (Optimized source code)
