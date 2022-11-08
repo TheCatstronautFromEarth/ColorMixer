@@ -21,9 +21,10 @@ Future ideas:
 ![ColorMixer1 4](https://user-images.githubusercontent.com/116021405/200656746-4fd596da-1b09-4d29-995e-0b0b3ba7a654.png)
 
 Updates:
+
 8.11.2022 - Version 1.4 released (More Cue settings, Optimized source code)
 
-1.11.2022 - Version 1.3 released (Revision of the GUI using BorderLayout. Packed the JFrame elements into arrays to shorten the source code.)
+1.11.2022 - Version 1.3 released (new GUI with BorderLayout Packed the JFrame elements into arrays)
 
 29.10.2022 - Version 1.2 released (Disable Buttons when the Cue value is empty. Optimized source code)
 
