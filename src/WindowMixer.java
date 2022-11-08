@@ -12,10 +12,9 @@ import javax.swing.border.EtchedBorder;
 public class WindowMixer extends JFrame {
 
 	private static final long serialVersionUID = 3065787531046475413L;
-
-	private static Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	private final Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private static Container cp;
-	private static JPanel[] panelArray = new JPanel[4];
+	private static final JPanel[] panelArray = new JPanel[4];
 	
 	// Create window
 	public WindowMixer(String titel) {
@@ -33,10 +32,10 @@ public class WindowMixer extends JFrame {
 		cp.setLayout(new BorderLayout());
 		cp.setBackground(new Color(200, 200, 200));
 
+		// Initialize Panels
 		String[] panelName = {"Mixer", "Preset", "Cue", "Hex Clipboard"};
 		int[] xWidthPanel =  {380, 330, 230,  300};
 		int[] yHeightPanel = {475,  56, 158,  56};
-		
 		for (int i = 0; i < panelArray.length; i++) {
 			panelArray[i] = new JPanel();
 			panelArray[i].setPreferredSize(new Dimension(xWidthPanel[i], yHeightPanel[i]));
@@ -48,7 +47,6 @@ public class WindowMixer extends JFrame {
 		cp.add(panelArray[1], BorderLayout.NORTH);
 		cp.add(panelArray[2], BorderLayout.WEST);
 		cp.add(panelArray[3], BorderLayout.SOUTH);
-
 		pack();
 		
 		// Set content to panels
@@ -58,6 +56,16 @@ public class WindowMixer extends JFrame {
 		PanelClipBoard.panClip();	
 	}
 
+	static void SetWindowColor(int red, int green, int blue) {
+		String StrHexOut = Functions.makeHexStr(red, green, blue);
+		PanelClipBoard.getTxtOutput().setText(StrHexOut);
+		Color color = new Color(red, green, blue);
+		cp.setBackground(color);
+		for (int i = 0; i < PanelMixer.getSliderArray().length; i++) {
+			PanelMixer.getSliderArray()[i].setBackground(color);
+		}
+	}
+
 	// Getter
 	public static Container getCp() {
 		return cp;
@@ -65,5 +73,4 @@ public class WindowMixer extends JFrame {
 	public static JPanel[] getPanelArray() {
 		return panelArray;
 	}
-	
 }

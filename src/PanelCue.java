@@ -1,118 +1,104 @@
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class PanelCue {
 
-	private static JButton btnSetToCue;
-	private static int valueHexRed, valueHexGreen, valueHexBlue;
-	private static boolean cueSelect = false;
-	private static JButton[] buttonArray = new JButton[4];
-	private static JLabel[] labelThumbArray = new JLabel[4];
-	private static JLabel[] labelHexArray = new JLabel[4];
-	
-	static void panCue() {
-		
-		// Button SetToCue 
-		btnSetToCue = new JButton("Set To");
-		btnSetToCue.setBounds(12, 18, 130, 24);
-		btnSetToCue.addActionListener(actions);
-		WindowMixer.getPanelArray()[2].add(btnSetToCue);
-		
-		// Button Cue
-		String[] buttonName = {"Cue 1", "Cue 2", "Cue 3", "Cue 4"};
-		int[] yOffsetButton = {48,73,98,123};
-		for (int i = 0; i < buttonArray.length; i++) {
-			buttonArray[i] = new JButton(buttonName[i]);
-			buttonArray[i].setBounds(12, yOffsetButton[i], 90, 24);
-			buttonArray[i].setEnabled(false);
-			buttonArray[i].addActionListener(actions);
-			WindowMixer.getPanelArray()[2].add(buttonArray[i]);
-		}
-		// Label Thumb
-		int[] yOffset = {50,75,100,125};
-		for (int i = 0; i < labelThumbArray.length; i++) {
-			labelThumbArray[i] = new JLabel();
-			labelThumbArray[i].setBounds(105, yOffset[i], 30, 20);
-			WindowMixer.getPanelArray()[2].add(labelThumbArray[i]);
-		}		
-		// Label Hex value
-		for (int i = 0; i < labelHexArray.length; i++) {
-			labelHexArray[i] = new JLabel("-free-");
-			labelHexArray[i].setBounds(150, yOffset[i], 60, 20);
-			WindowMixer.getPanelArray()[2].add(labelHexArray[i]);
-		}
-	}
+    private static final int yOffset = 25;
+    private static int amountOfLabels = 0;
+    private static int amountOfButtons = 0;
+    private static final int maxAmountOfButtons = 16;
+    private static boolean cueSelect = false;
+    private static JButton buttonOverwrite;
+    private static final JLabel[] cueLabelArray = new JLabel[16];
+    private static final JButton[] cueButtonArray = new JButton[16];
+    private static String cueHexText;
 
-	// Buttons ActionListener 
-	public static ActionListener actions = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			Object btnSource = e.getSource();
-			if (cueSelect) {
-				btnSetToCue.setForeground(Color.BLACK);
-				btnSetToCue.setText("Set To");	
-				for (int i = 0; i < labelHexArray.length; i++) {	
-					if (labelHexArray[i].getText().equals("-free-")) {
-						buttonArray[i].setEnabled(false);
-					}
-				}
-				setCue(btnSource);
-				cueSelect = false;
-			} else {
-				if (btnSource == btnSetToCue) {
-					btnSetToCue.setForeground(Color.RED);
-					btnSetToCue.setText("Choose..");
-					for (int i = 0; i < getButtonArray().length; i++) {
-						buttonArray[i].setEnabled(true);
-					}			
-					cueSelect = true;
-				} else {
-					callCue(btnSource);
-				}
-			}
-		}
-	};
+    public static void panCue() {
 
-	// Set Cue
-	public static void setCue(Object btnSource) {
-		String hexValue = PanelClipBoard.getTxtOutput().getText();
-		valueHexRed = Integer.parseInt(hexValue.substring(0, 2), 16);
-		valueHexGreen = Integer.parseInt(hexValue.substring(2, 4), 16);
-		valueHexBlue = Integer.parseInt(hexValue.substring(4, 6), 16);
-		
-		Color color = new Color(valueHexRed, valueHexGreen, valueHexBlue);
-		
-		for (int i = 0; i < buttonArray.length; i++) {
-			if (btnSource == buttonArray[i]) {
-				labelHexArray[i].setText(hexValue);
-				labelThumbArray[i].setOpaque(true);
-				labelThumbArray[i].setBackground(color);
-				buttonArray[i].setEnabled(true);
-			}
-		}
+        buttonOverwrite = new JButton("Overwrite");
+        buttonOverwrite.setBounds(8, 20, 150, 26);
+        buttonOverwrite.addActionListener(event -> ChangeOverWrite());
+        buttonOverwrite.setEnabled(false);
+        WindowMixer.getPanelArray()[2].add(buttonOverwrite);
+
+        AddCueButton();
+    }
+
+    public static void AddCueButton()  {
+    	cueButtonArray[amountOfButtons] = new JButton("+ Cue");
+    	cueButtonArray[amountOfButtons].setBounds(8, 50 + amountOfButtons * yOffset, 90, 24);
+    	cueButtonArray[amountOfButtons].addActionListener(actions);
+        WindowMixer.getPanelArray()[2].add(cueButtonArray[amountOfButtons]);
+        WindowMixer.getPanelArray()[2].repaint();
+        amountOfButtons++;
+    }
+
+    public static void AddCueLabel() {
+    	cueHexText = PanelClipBoard.getTxtOutput().getText();
+        cueLabelArray[amountOfLabels] = new JLabel(cueHexText, SwingConstants.CENTER);
+        cueLabelArray[amountOfLabels].setBounds(110, 50 + amountOfLabels * yOffset, 100, 24);
+        cueLabelArray[amountOfLabels].setBackground(Functions.HexToDec(cueHexText));
+        cueLabelArray[amountOfLabels].setOpaque(true);
+        WindowMixer.getPanelArray()[2].add(cueLabelArray[amountOfLabels]);
+        WindowMixer.getPanelArray()[2].repaint();
+        amountOfLabels++;
+    }
+
+    public static ActionListener actions = e -> {
+        JButton btnCueSource = (JButton) e.getSource();
+        if (Objects.equals(btnCueSource.getText(), "+ Cue")) {
+        	getButtonOverwrite().setEnabled(true);
+            btnCueSource.setText("Cue " + amountOfButtons);
+            AddCueLabel();
+            if(amountOfButtons < maxAmountOfButtons) { AddCueButton(); }            
+        } else {
+        	String buttonNumber = btnCueSource.getText().substring(4);
+        	CueHandle(cueSelect, buttonNumber);
+        }
+    };
+
+	private static void ChangeOverWrite() {
+		if (cueSelect) {
+			getButtonOverwrite().setForeground(Color.BLACK);
+			cueSelect = false;
+		} else {
+			getButtonOverwrite().setForeground(Color.RED);
+    		cueSelect = true;	
+    	}
 	}
 	
-	// Call Cue
-	public static void callCue(Object btnSource) {
-		for (int i = 0; i < buttonArray.length; i++) {	
-			if (btnSource == buttonArray[i]) {
-				Functions.HexToDec(labelHexArray[i].getText());			
-			}
+	public static void CueHandle(Boolean cueSel, String bntNum) {
+		if (cueSel) {
+    		cueHexText = PanelClipBoard.getTxtOutput().getText();
+    		cueLabelArray[Integer.parseInt(bntNum)-1].setBackground( Functions.HexToDec(cueHexText ));
+    		cueLabelArray[Integer.parseInt(bntNum)-1].setText(cueHexText);
+    		ChangeOverWrite(); 
+		} else {
+			WindowMixer.getCp().setBackground(Functions.HexToDec(cueLabelArray[Integer.parseInt(bntNum)-1].getText()));
 		}	
 	}
-	
+
 	// Getter
+	public static JButton getButtonOverwrite() {
+		return buttonOverwrite;
+	}
+	
 	public static JButton[] getButtonArray() {
-		return buttonArray;
+		return cueButtonArray;
 	}
-	public static JLabel[] getLabelThumbArray() {
-		return labelThumbArray;
+	public static int getAmountOfButtons() {
+		return amountOfButtons;
 	}
-	public static JLabel[] getLabelHexArray() {
-		return labelHexArray;
+	
+	public static JLabel[] getLabelArray() {
+		return cueLabelArray;
+	}
+	public static int getAmountOfLabels() {
+		return amountOfLabels;
 	}
 }

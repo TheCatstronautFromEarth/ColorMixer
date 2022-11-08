@@ -1,11 +1,8 @@
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class PanelMixer {
@@ -14,23 +11,18 @@ public class PanelMixer {
 	private static int intOldMasterValue = 200, intMasterValue = 200;
 	private static String StrHexOut;
 	private static boolean MasterLinear = true;
-	private static JLabel[] labelTitleArray = new JLabel[4];
 	private static JSlider[] sliderArray = new JSlider[4];
-	private static JLabel[] labelPercentArray = new JLabel[3];
-	private static JLabel[] labelDecArray = new JLabel[4];
-	private static JLabel[] labelHexArray = new JLabel[4];
+	private static JLabel[] labelArray = new JLabel[15];
 	private static JButton btnSwitch;
 
 	public static void panMix() {
 		intValue[0] = 200;
 		intValue[1] = 200;
 		intValue[2] = 200;
-		Color color = new Color(intValue[0], intValue[1], intValue[2]);
 
-		// Slider
 		String[] sliderNames = { "Red", "Green", "Blue", "Master" };
 		int[] xOffsetSlider = { 5, 90, 175, 280 };
-		for (int i = 0; i < labelTitleArray.length; i++) {
+		for (int i = 0; i < 4; i++) {
 			sliderArray[i] = new JSlider(JSlider.VERTICAL, 0, 255, 128);
 			sliderArray[i].setName(sliderNames[i]);
 			sliderArray[i].setBounds(xOffsetSlider[i], 35, 70, 360);
@@ -39,160 +31,86 @@ public class PanelMixer {
 			sliderArray[i].setMinorTickSpacing(5);
 			sliderArray[i].setPaintTicks(true);
 			sliderArray[i].setSnapToTicks(false);
-			sliderArray[i].setBackground(color);
-			sliderArray[i].addChangeListener(new ChangeListener() {
-				@Override
-				public void stateChanged(ChangeEvent evt) {
-					// If Fader Event Change
-					JSlider source;
-					source = (JSlider) evt.getSource();
-					// If change Master Slider
-					if (source.getName().equals("Master")) {
-						intOldMasterValue = intMasterValue;
-						intMasterValue = source.getValue();
-						// If Masterfader moves up
-						if (intOldMasterValue < intMasterValue) {
-							masterSliderUp(MasterLinear);
-						}
-						// If Masterfader moves down
-						if (intOldMasterValue > intMasterValue) {
-							masterSliderDown(MasterLinear);
-						}
-					}
-					// If change RGB sliders
-					else {
-						// If changed red slider
-						if (source.getName().equals("Red")) {
-							intValue[0] = source.getValue();
-							redSliderChange();
-						}
-						// If changed green slider
-						if (source.getName().equals("Green")) {
-							intValue[1] = source.getValue();
-							greenSliderChange();
-						}
-						// If changed blue slider
-						if (source.getName().equals("Blue")) {
-							intValue[2] = source.getValue();
-							blueSliderChange();
-						}
-					}
-					StrHexOut = Functions.makeHexStr(intValue[0], intValue[1], intValue[2]);
-					PanelClipBoard.getTxtOutput().setText(StrHexOut);
-					Color color = new Color(intValue[0], intValue[1], intValue[2]);
-					WindowMixer.getCp().setBackground(color);
-					for (int i = 0; i < sliderArray.length; i++) {
-						sliderArray[i].setBackground(color);
-					}
-				}
-			});
-			if (i < 3) {
-				sliderArray[i].setPaintLabels(true);
-			} else {
-				sliderArray[i].setPaintLabels(false);
-			}
+			sliderArray[i].setBackground(new Color(intValue[0], intValue[1], intValue[2]));
+			sliderArray[i].addChangeListener(actions);
+			sliderArray[i].setPaintLabels(true);
+			if (i == 3) { sliderArray[i].setPaintLabels(false); }
 			WindowMixer.getPanelArray()[0].add(sliderArray[i]);
 		}
 
-		// Label Title Name
-		String[] titleNames = { "Red", "Green", "Blue", "Master" };
-		int[] xOffsetTitle = { 30, 115, 200, 295 };
-		for (int i = 0; i < labelTitleArray.length; i++) {
-			labelTitleArray[i] = new JLabel(titleNames[i]);
-			labelTitleArray[i].setBounds(xOffsetTitle[i], 15, 50, 20);
-			WindowMixer.getPanelArray()[0].add(labelTitleArray[i]);
+		// Initialize all Labels
+		String[] str = { "Red", "Green", "Blue", "Master",  "78 %", "78 %", "78 %", "200", "200", "200", "Dec","c8", "c8", "c8", "Hex" };
+		int[] xOffset = { 30, 115, 200, 295, 30, 115, 200, 30, 115, 200, 300, 30, 115, 200, 300 };
+		int[] yOffset = { 15, 15, 15, 15, 400, 400, 400, 420, 420, 420, 420, 440, 440, 440, 440 };
+		for (int i = 0; i < labelArray.length; i++) {
+			labelArray[i] = new JLabel(str[i]);
+			labelArray[i].setBounds(xOffset[i], yOffset[i], 100, 24);
+			WindowMixer.getPanelArray()[0].add(labelArray[i]);
 		}
 
-		// Label Percent Value
-		String[] strPercentValues = { "78 %", "78 %", "78 %" };
-		int[] xOffsetPercent = { 30, 115, 200 };
-		for (int i = 0; i < labelPercentArray.length; i++) {
-			labelPercentArray[i] = new JLabel(strPercentValues[i]);
-			labelPercentArray[i].setBounds(xOffsetPercent[i], 400, 100, 24);
-			WindowMixer.getPanelArray()[0].add(labelPercentArray[i]);
-		}
-
-		// Label Dec Value
-		String[] strDecValues = { Integer.toString(intValue[0]),
-				Integer.toString(intValue[1]), Integer.toString(intValue[2]),
-				"Dec" };
-		int[] xOffsetDec = { 30, 115, 200, 300 };
-		for (int i = 0; i < labelDecArray.length; i++) {
-			labelDecArray[i] = new JLabel(strDecValues[i]);
-			labelDecArray[i].setBounds(xOffsetDec[i], 420, 100, 24);
-			WindowMixer.getPanelArray()[0].add(labelDecArray[i]);
-		}
-
-		// Label Hex Value
-		String[] strHexValues = { Integer.toHexString(intValue[0]),
-				Integer.toHexString(intValue[1]),
-				Integer.toHexString(intValue[2]), "Hex" };
-		int[] xOffsetHex = { 30, 115, 200, 300 };
-		for (int i = 0; i < labelHexArray.length; i++) {
-			labelHexArray[i] = new JLabel(strHexValues[i]);
-			labelHexArray[i].setBounds(xOffsetHex[i], 440, 100, 24);
-			WindowMixer.getPanelArray()[0].add(labelHexArray[i]);
-		}
-
-		// Button Switch Master Log-Linear
 		String btnText = "Linear";
 		btnSwitch = new JButton(btnText);
 		btnSwitch.setBounds(270, 400, 90, 24);
-		btnSwitch.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				if (event.getActionCommand().equals("Linear")) {
-					btnSwitch.setText("Log");
-					MasterLinear = false;
-				} else {
-					btnSwitch.setText("Linear");
-					MasterLinear = true;
-				}
-			}
-		});
+		btnSwitch.addActionListener(event -> ChangeMasterSlider());
 		WindowMixer.getPanelArray()[0].add(btnSwitch);
 	}
 
-	private static void redSliderChange() {
-		labelDecArray[0].setText(Integer.toString(intValue[0])); 			// Label Red Dec 
-		labelHexArray[0].setText(Integer.toHexString(intValue[0])); 		// Label Red Hex 
-		labelPercentArray[0].setText(Functions.DecToPercent(intValue[0]));	// Label Red Percent 
-	}
-
-	private static void greenSliderChange() {
-		labelDecArray[1].setText(Integer.toString(intValue[1])); 			// Label Green Dec 
-		labelHexArray[1].setText(Integer.toHexString(intValue[1])); 		// Label Green Hex 
-		labelPercentArray[1].setText(Functions.DecToPercent(intValue[1])); 	// Label Green Percent 
-	}
-
-	private static void blueSliderChange() {
-		labelDecArray[2].setText(Integer.toString(intValue[2])); 			// Label Blue Dec 
-		labelHexArray[2].setText(Integer.toHexString(intValue[2])); 		// Label Blue Hex
-		labelPercentArray[2].setText(Functions.DecToPercent(intValue[2])); 	// Label Blue Percent
-	}
-
-	// Set RGB-Slider when MasterSlider moves up
-	private static void masterSliderUp(boolean masterLinear) {
-		if (masterLinear) {
-			for (int i = 0; i < sliderArray.length - 1; i++) {
-				sliderArray[i].setValue(sliderArray[i].getValue() + 1);
+    public static ChangeListener actions = e -> {
+    	JSlider source = (JSlider) e.getSource();
+		if (source.getName().equals("Master")) {
+			intOldMasterValue = intMasterValue;
+			intMasterValue = source.getValue();
+			if (intOldMasterValue < intMasterValue) {
+				masterSlider(MasterLinear, true);
+			} else if (intOldMasterValue > intMasterValue) {
+				masterSlider(MasterLinear, false);
 			}
 		} else {
-			for (int i = 0; i < sliderArray.length - 1; i++) {
-				sliderArray[i].setValue((int) (sliderArray[i].getValue() * 1.01 + 1));
-			}
+			if (source.getName().equals("Red")) {rgbSliderChange(0, source);}
+			if (source.getName().equals("Green")) {rgbSliderChange(1, source);}
+			if (source.getName().equals("Blue")) {rgbSliderChange(2, source);}
+		}
+		WindowMixer.SetWindowColor(intValue[0], intValue[1], intValue[2]);
+    };
+    
+	private static void ChangeMasterSlider() {
+		if (btnSwitch.getActionCommand().equals("Linear")) {
+			btnSwitch.setText("Log");
+			MasterLinear = false;
+		} else {
+			btnSwitch.setText("Linear");
+			MasterLinear = true;
 		}
 	}
+	
+	private static void rgbSliderChange(int sliderID, JSlider faderSource) {
+		intValue[sliderID] = ((JSlider) faderSource).getValue();	
+		labelArray[sliderID+7].setText(Integer.toString(intValue[sliderID]));
+		labelArray[sliderID+11].setText(Integer.toHexString(intValue[sliderID]));
+		labelArray[sliderID+4].setText(Functions.DecToPercent(intValue[sliderID]));
+	}
 
-	// Set RGB-Slider when MasterSlider moves down
-	private static void masterSliderDown(boolean masterLinear) {
-		if (masterLinear) {
-			for (int i = 0; i < sliderArray.length - 1; i++) {
-				sliderArray[i].setValue(sliderArray[i].getValue() - 1);
+	// Set RGB-Slider when MasterSlider is moving
+	private static void masterSlider(boolean masterLinear, boolean moveUp) {
+		if (moveUp) {
+			if (masterLinear) {
+				for (int i = 0; i < sliderArray.length - 1; i++) {
+					sliderArray[i].setValue(sliderArray[i].getValue() + 1);
+				}
+			} else {
+				for (int i = 0; i < sliderArray.length - 1; i++) {
+					sliderArray[i].setValue((int) (sliderArray[i].getValue() * 1.01 + 1));
+				}
 			}
 		} else {
-			for (int i = 0; i < sliderArray.length - 1; i++) {
-				sliderArray[i].setValue((int) (sliderArray[i].getValue() / 1.01));
+			if (masterLinear) {
+				for (int i = 0; i < sliderArray.length - 1; i++) {
+					sliderArray[i].setValue(sliderArray[i].getValue() - 1);
+				}
+			} else {
+				for (int i = 0; i < sliderArray.length - 1; i++) {
+					sliderArray[i].setValue((int) (sliderArray[i].getValue() / 1.01));
+				}
 			}
 		}
 	}
@@ -201,11 +119,9 @@ public class PanelMixer {
 	public static int[] getIntValue() {
 		return intValue;
 	}
-
 	public static JSlider[] getSliderArray() {
 		return sliderArray;
 	}
-
 	public static String getStrHexOut() {
 		return StrHexOut;
 	}

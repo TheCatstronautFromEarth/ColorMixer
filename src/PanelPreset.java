@@ -1,4 +1,3 @@
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
@@ -8,10 +7,10 @@ import javax.swing.JTextField;
 
 public class PanelPreset {
 	
-	private static JButton[] buttonArray = new JButton[2];
+	private final static JButton[] buttonArray = new JButton[2];
 	private static JTextField fileNameTF  = new JTextField(15);
-	private static JFileChooser open = new JFileChooser();
-	static JFileChooser save = new JFileChooser();
+	private final static JFileChooser open = new JFileChooser();
+	final static JFileChooser save = new JFileChooser();
 	
 	static void panPreset() {
 		
@@ -32,14 +31,11 @@ public class PanelPreset {
 	}
 	
 	// Buttons ActionListener 
-	private static ActionListener actions = new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == buttonArray[0]) {
-				openFile();		
-			} else if (e.getSource() == buttonArray[1]) {
-				saveFile();
-			}
+	private static ActionListener actions = e -> {
+		if (e.getSource() == buttonArray[0]) {
+			openFile();		
+		} else if (e.getSource() == buttonArray[1]) {
+			saveFile();
 		}
 	};
 
@@ -79,7 +75,7 @@ public class PanelPreset {
 	}
 
 	// FileFilter
-	static class colorFileFilter extends javax.swing.filechooser.FileFilter {
+	private static class colorFileFilter extends javax.swing.filechooser.FileFilter {
 	    public boolean accept(File file) {
 	        String filename = file.getName();
 	        return file.isDirectory() || filename.toLowerCase().endsWith(".cmf");
