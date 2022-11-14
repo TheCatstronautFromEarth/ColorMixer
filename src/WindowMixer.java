@@ -1,7 +1,7 @@
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Dimension;
+
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -15,50 +15,49 @@ public class WindowMixer extends JFrame {
 	private final Border loweredetched = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private static Container cp;
 	private static final JPanel[] panelArray = new JPanel[4];
-	
+
 	// Create window
 	public WindowMixer(String titel) {
 		super(titel);
-		initGUI();
 		this.setResizable(false);
+		initGUI();
+		MenueBar.InitMenueBar(this);
 		this.setVisible(true);
 	}
 
 	// Initialize window & panels
 	private void initGUI() {
-
+		setBounds(500, 200, 625, 610);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		cp = getContentPane();
-		cp.setLayout(new BorderLayout());
+		cp.setLayout(null);
 		cp.setBackground(new Color(200, 200, 200));
-
+		
 		// Initialize Panels
-		String[] panelName = {"Mixer", "Preset", "Cue", "Hex Clipboard"};
-		int[] xWidthPanel =  {380, 330, 230,  300};
-		int[] yHeightPanel = {475,  56, 158,  56};
+		String[] panelName = {"Cue", "Mixer", "Output", "Input"};
+		int[] xOffestPanel = { 10, 245,  10, 245};
+		int[] yOffsetPanel = {  5,   5, 485, 485};				
+		int[] xWidthPanel =  {230, 370, 230, 370};
+		int[] yHeightPanel = {480, 480,  70,  70};
 		for (int i = 0; i < panelArray.length; i++) {
 			panelArray[i] = new JPanel();
-			panelArray[i].setPreferredSize(new Dimension(xWidthPanel[i], yHeightPanel[i]));
+			panelArray[i].setBounds(xOffestPanel[i], yOffsetPanel[i], xWidthPanel[i], yHeightPanel[i]);
 			panelArray[i].setOpaque(false);
 			panelArray[i].setBorder(BorderFactory.createTitledBorder(loweredetched, panelName[i]));
 			panelArray[i].setLayout(null);
+			cp.add(panelArray[i]);
 		}
-		cp.add(panelArray[0], BorderLayout.CENTER);
-		cp.add(panelArray[1], BorderLayout.NORTH);
-		cp.add(panelArray[2], BorderLayout.WEST);
-		cp.add(panelArray[3], BorderLayout.SOUTH);
-		pack();
 		
 		// Set content to panels
-		PanelMixer.panMix();
-		PanelPreset.panPreset();
 		PanelCue.panCue();
-		PanelClipBoard.panClip();	
+		PanelMixer.panMix();
+		PanelOutput.panOutput();
+		PanelInput.panInput();
 	}
 
 	static void SetWindowColor(int red, int green, int blue) {
 		String StrHexOut = Functions.makeHexStr(red, green, blue);
-		PanelClipBoard.getTxtOutput().setText(StrHexOut);
+		PanelOutput.getTxtOutput().setText(StrHexOut);
 		Color color = new Color(red, green, blue);
 		cp.setBackground(color);
 		for (int i = 0; i < PanelMixer.getSliderArray().length; i++) {

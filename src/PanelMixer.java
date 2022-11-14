@@ -35,7 +35,7 @@ public class PanelMixer {
 			sliderArray[i].addChangeListener(actions);
 			sliderArray[i].setPaintLabels(true);
 			if (i == 3) { sliderArray[i].setPaintLabels(false); }
-			WindowMixer.getPanelArray()[0].add(sliderArray[i]);
+			WindowMixer.getPanelArray()[1].add(sliderArray[i]);
 		}
 
 		// Initialize all Labels
@@ -45,14 +45,14 @@ public class PanelMixer {
 		for (int i = 0; i < labelArray.length; i++) {
 			labelArray[i] = new JLabel(str[i]);
 			labelArray[i].setBounds(xOffset[i], yOffset[i], 100, 24);
-			WindowMixer.getPanelArray()[0].add(labelArray[i]);
+			WindowMixer.getPanelArray()[1].add(labelArray[i]);
 		}
 
 		String btnText = "Linear";
 		btnSwitch = new JButton(btnText);
 		btnSwitch.setBounds(270, 400, 90, 24);
 		btnSwitch.addActionListener(event -> ChangeMasterSlider());
-		WindowMixer.getPanelArray()[0].add(btnSwitch);
+		WindowMixer.getPanelArray()[1].add(btnSwitch);
 	}
 
     public static ChangeListener actions = e -> {
@@ -86,7 +86,7 @@ public class PanelMixer {
 	private static void rgbSliderChange(int sliderID, JSlider faderSource) {
 		intValue[sliderID] = ((JSlider) faderSource).getValue();	
 		labelArray[sliderID+7].setText(Integer.toString(intValue[sliderID]));
-		labelArray[sliderID+11].setText(Integer.toHexString(intValue[sliderID]));
+		labelArray[sliderID+11].setText(String.format("%02x", intValue[sliderID]));
 		labelArray[sliderID+4].setText(Functions.DecToPercent(intValue[sliderID]));
 	}
 

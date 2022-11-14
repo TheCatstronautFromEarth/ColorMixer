@@ -17,34 +17,6 @@ public class Functions {
 		return strfromCb;		
 	}
 	
-	// Check Hex Input
-	public static String checkHexValue(String hexInput) {
-		int characters = 0;
-		int txtInputLength = hexInput.length();
-		String message = "";
-		if (txtInputLength == 6) {
-			for (int i = 0; i < 6; i++) {
-				char[] K = hexInput.toCharArray();
-				if ((K[i] >= 'A' && K[i] <= 'F')
-						|| (K[i] >= 'a' && K[i] <= 'f')
-						|| (Character.isDigit(hexInput.charAt(i)))) {
-					characters++;
-				}
-			}
-			if (characters == 6) {
-				message = "Accept";
-				HexToDec(hexInput);
-				characters = 0;
-			} else {
-				message = "Only 0-9 or A-F";
-				characters = 0;
-			}
-		} else {
-			message = "Only 6 digits";
-		}
-		return message;
-	}
-	
 	// Convert String Hex to int Dec
 	public static Color HexToDec(String StrHexCode) {
 		int Red, Green, Blue;

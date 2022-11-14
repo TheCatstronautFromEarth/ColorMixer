@@ -6,10 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 public class DiscIO {
-
+	
+	private final static JFileChooser open = new JFileChooser();
+	final static JFileChooser save = new JFileChooser();
+	
 	public static void read(File file) {
 		try {
 			@SuppressWarnings("resource")
@@ -20,18 +24,16 @@ public class DiscIO {
 			int green[] = new int[16];
 			int blue[] = new int[16];
 			String valueHex[] = new String[16];
-			int existAmmountOfLabel = PanelCue.getAmountOfLabels();		
+			int existAmmountOfLabel = PanelCue.getIntAmountOfLabels();		
 			while ((row = in.readLine()) != null) {
 				valueHex[i] = row.substring(3, 9);
 				red[i] = Integer.parseInt(row.substring(3, 5), 16);
 				green[i] = Integer.parseInt(row.substring(5, 7), 16);
 				blue[i] = Integer.parseInt(row.substring(7, 9), 16);
-				existAmmountOfLabel = PanelCue.getAmountOfLabels();
+				existAmmountOfLabel = PanelCue.getIntAmountOfLabels();
 				if (i == existAmmountOfLabel) {
 					PanelCue.AddCueLabel();
-					if (i < 15) {
-						PanelCue.AddCueButton();
-					}
+					if (i < 15) { PanelCue.AddCueButton(); }
 				}
 				PanelCue.getButtonArray()[i].setText("Cue " + Integer.toString(i+1));
 				PanelCue.getLabelArray()[i].setText(valueHex[i]);
@@ -49,11 +51,11 @@ public class DiscIO {
 		boolean writable = false;
 		String[] row = new String[16];
 		PanelCue.getLabelArray();
-		for (int i = 0; i < PanelCue.getAmountOfLabels(); i++) {
+		for (int i = 0; i < PanelCue.getIntAmountOfLabels(); i++) {
 			row[i] = String.format("%02d", (i+1)) + ":" +PanelCue.getLabelArray()[i].getText();
 		}
 		try {
-			File pfad = PanelPreset.save.getCurrentDirectory();
+			File pfad = save.getCurrentDirectory();
 			File saveFile = new File(pfad + "/" + file);
 			FileWriter fw = null;
 			if (saveFile.exists()) {
@@ -76,18 +78,56 @@ public class DiscIO {
 			if (writable) {
 				fw = new FileWriter(saveFile.getPath(), false);
 				PrintWriter pw = new PrintWriter(fw);
-				for (int i = 0; i <= PanelCue.getAmountOfLabels()-1; i++) {
+				for (int i = 0; i <= PanelCue.getIntAmountOfLabels()-1; i++) {
 					pw.println(row[i]);
 				}
 				fw.flush();
 				fw.close();
 				pw.flush();
-				pw.close();
+				pw.close(); 
 				JOptionPane.showMessageDialog(null, "Save successful");
-				PanelPreset.getfileNameTF().setText(file);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	// Open file
+	protected static void openFile() {
+		open.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+		open.addChoosableFileFilter(new colorFileFilter());
+        int retval = open.showOpenDialog(open);
+        if (retval == JFileChooser.APPROVE_OPTION) {
+        	File file = open.getSelectedFile();
+            DiscIO.read(file);
+	    }
+	}
+	
+	protected static void saveFile() {
+		String SaveName;		
+		SaveName = "New_Preset.cmf";
+		if (!SaveName.endsWith(".cmf")) {
+			SaveName = SaveName + ".cmf";
+		}
+		File file = new File(SaveName);
+		save.setSelectedFile(file);
+		int retval = save.showSaveDialog(save);
+        save.setFileSelectionMode(JFileChooser.FILES_ONLY);
+        save.addChoosableFileFilter(new colorFileFilter());
+        if (retval == JFileChooser.APPROVE_OPTION) {
+        	String Name = save.getSelectedFile().getName();
+        	DiscIO.write(Name);
+	    }
+	}
+	
+	// FileFilter
+	private static class colorFileFilter extends javax.swing.filechooser.FileFilter {
+	    public boolean accept(File file) {
+	        String filename = file.getName();
+	        return file.isDirectory() || filename.toLowerCase().endsWith(".cmf");
+	    }
+	    public String getDescription() {
+	        return "*.cmf";
+	    }
 	}
 }
