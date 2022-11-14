@@ -16,7 +16,7 @@ On Windows/Linux the slider only jumps one value in the direction where you clic
 Future ideas:
 - Implementing a pointer that picks up every color on the desktop
 - Controlling SmartHome WLAN lights with Tuya (JSON, MQTT)
-- Controlling DMX lights over WLAN using an ESP8266
+- Controlling DMX lights over WLAN using an ESP8266 over ArtNet
 
 ![ColorMixer1 5](https://user-images.githubusercontent.com/116021405/201774179-3559004c-656d-42b9-a48b-f5e1a5454987.png)
 
