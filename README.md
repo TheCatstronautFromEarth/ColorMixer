@@ -18,9 +18,11 @@ Future ideas:
 - Controlling SmartHome WLAN lights with Tuya (JSON, MQTT)
 - Controlling DMX lights over WLAN using an ESP8266 over ArtNet
 
-![ColorMixer1 5](https://user-images.githubusercontent.com/116021405/201774179-3559004c-656d-42b9-a48b-f5e1a5454987.png)
+![ColorMixer1 6](https://user-images.githubusercontent.com/116021405/202317917-d43677fa-d0e3-4f0a-b1dc-d3121cd8d592.png)
 
 Updates:
+
+16.11.2022 - Version 1.6 released (Optimized source code)
 
 14.11.2022 - Version 1.5 released (Redesigned GUI with MenueBar)
 
