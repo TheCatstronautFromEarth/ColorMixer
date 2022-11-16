@@ -19,7 +19,6 @@ public class PanelCue {
     private static String cueHexText;
 
     public static void panCue() {
-
         buttonOverwrite = new JButton("Overwrite");
         buttonOverwrite.setBounds(8, 20, 150, 26);
         buttonOverwrite.addActionListener(event -> ChangeOverWrite());
@@ -41,7 +40,7 @@ public class PanelCue {
     	cueHexText = PanelOutput.getTxtOutput().getText();
         cueLabelArray[intAmountOfLabels] = new JLabel(cueHexText, SwingConstants.CENTER);
         cueLabelArray[intAmountOfLabels].setBounds(110, 50 + intAmountOfLabels * intYOffset, 100, 24);
-        cueLabelArray[intAmountOfLabels].setBackground(Functions.HexToDec(cueHexText));
+        cueLabelArray[intAmountOfLabels].setBackground(Functions.MakeColorFromString(cueHexText, false));
         cueLabelArray[intAmountOfLabels].setOpaque(true);
         WindowMixer.getPanelArray()[0].add(cueLabelArray[intAmountOfLabels]);
         WindowMixer.getPanelArray()[0].repaint();
@@ -74,11 +73,11 @@ public class PanelCue {
 	public static void CueHandle(Boolean cueSel, String bntNum) {
 		if (cueSel) {
     		cueHexText = PanelOutput.getTxtOutput().getText();
-    		cueLabelArray[Integer.parseInt(bntNum)-1].setBackground( Functions.HexToDec(cueHexText ));
+    		cueLabelArray[Integer.parseInt(bntNum)-1].setBackground(Functions.MakeColorFromString(cueHexText, false));
     		cueLabelArray[Integer.parseInt(bntNum)-1].setText(cueHexText);
     		ChangeOverWrite(); 
 		} else {
-			WindowMixer.getCp().setBackground(Functions.HexToDec(cueLabelArray[Integer.parseInt(bntNum)-1].getText()));
+			WindowMixer.getCp().setBackground(Functions.MakeColorFromString(cueLabelArray[Integer.parseInt(bntNum)-1].getText(), true));
 		}	
 	}
 
@@ -86,11 +85,9 @@ public class PanelCue {
 	public static JButton getButtonOverwrite() {
 		return buttonOverwrite;
 	}
-	
 	public static JButton[] getButtonArray() {
 		return cueButtonArray;
 	}
-	
 	public static JLabel[] getLabelArray() {
 		return cueLabelArray;
 	}

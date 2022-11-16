@@ -27,7 +27,7 @@ public class WindowMixer extends JFrame {
 
 	// Initialize window & panels
 	private void initGUI() {
-		setBounds(500, 200, 625, 610);
+		setBounds(500, 200, 630, 620);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		cp = getContentPane();
 		cp.setLayout(null);
@@ -47,7 +47,6 @@ public class WindowMixer extends JFrame {
 			panelArray[i].setLayout(null);
 			cp.add(panelArray[i]);
 		}
-		
 		// Set content to panels
 		PanelCue.panCue();
 		PanelMixer.panMix();

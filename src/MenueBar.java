@@ -11,7 +11,7 @@ public class MenueBar {
 	private static JMenuItem quit;
 	private static JMenuItem open;
 	private static JMenuItem save;
-	private final static String InfoText =  "<html>ColorMixer v1.5<br>Released on 14. Nov 2022<br><a href='https://github.com/TheCatstronautFromEarth/ColorMixer'>https://github.com/TheCatstronautFromEarth/ColorMixer</a></html>";
+	private final static String InfoText =  "<html>ColorMixer v1.6<br>Released on 16. Nov 2022<br><a href='https://github.com/TheCatstronautFromEarth/ColorMixer'>https://github.com/TheCatstronautFromEarth/ColorMixer</a></html>";
 
 	public static void InitMenueBar(WindowMixer windowMixer) {
 		

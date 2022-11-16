@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -12,7 +13,7 @@ import javax.swing.event.DocumentListener;
 
 public class PanelInput {
 
-	private static JButton btnAssume, btnGetClipboard;
+	private static JButton btnApply, btnGetClipboard;
 	private static JTextField tFInput;
 	private static JLabel lblMessage;
 	private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("\\p{XDigit}+");
@@ -25,12 +26,19 @@ public class PanelInput {
 		btnGetClipboard.addActionListener(actions);
 		WindowMixer.getPanelArray()[3].add(btnGetClipboard);
 
-		// Button Assume value from Textfield
-		btnAssume = new JButton("Assume");
-		btnAssume.setBounds(265, 18, 90, 24);
-		btnAssume.setEnabled(false);
-		btnAssume.addActionListener(event -> { Functions.HexToDec(tFInput.getText()); });
-		WindowMixer.getPanelArray()[3].add(btnAssume);
+		// Button Apply value from Textfield
+		btnApply = new JButton("Apply");
+		btnApply.setBounds(265, 18, 90, 24);
+		btnApply.setEnabled(false);
+		btnApply.addActionListener(event -> { 
+			Functions.MakeColorFromString(tFInput.getText(), true);
+		});
+		WindowMixer.getPanelArray()[3].add(btnApply);
+		
+		// Label Message
+		lblMessage = new JLabel("Enter HEX value");
+		lblMessage.setBounds(22, 40, 400, 24);
+		WindowMixer.getPanelArray()[3].add(lblMessage);
 		
 		// TextField HEX hexInput
 		tFInput = new JTextField();
@@ -46,13 +54,8 @@ public class PanelInput {
 			}
 		});
 		WindowMixer.getPanelArray()[3].add(tFInput);
-		
-		// Label Message
-		lblMessage = new JLabel("Enter HEX value");
-		lblMessage.setBounds(22, 40, 400, 24);
-		WindowMixer.getPanelArray()[3].add(lblMessage);
 	}
-	
+
 	private static boolean isHexadecimal() {
 	    final Matcher matcher = HEXADECIMAL_PATTERN.matcher(tFInput.getText());
 	    return matcher.matches();
@@ -62,11 +65,11 @@ public class PanelInput {
 		String CheckText = null;
 		if (isHexadecimal()) {	
 			if (tFInput.getText().length() == 6){
-				btnAssume.setEnabled(true);
+				btnApply.setEnabled(true);
 				CheckText = "Input OK";
 			} else {
-				btnAssume.setEnabled(false);
-				CheckText = "Only 6 digits";		
+				btnApply.setEnabled(false);
+				CheckText = "Only 6 character";		
 			}
 		} else {
 			if (tFInput.getText().length() == 0) {

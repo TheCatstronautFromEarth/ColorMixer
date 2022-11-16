@@ -16,27 +16,32 @@ public class Functions {
 		strfromCb = (String) transfer.getTransferData(DataFlavor.stringFlavor);		
 		return strfromCb;		
 	}
-	
-	// Convert String Hex to int Dec
-	public static Color HexToDec(String StrHexCode) {
-		int Red, Green, Blue;
-		Red = Integer.parseInt(StrHexCode.substring(0,2), 16);
-		Green = Integer.parseInt(StrHexCode.substring(2,4), 16);
-		Blue = Integer.parseInt(StrHexCode.substring(4,6), 16);
-		WindowMixer.SetWindowColor(Red, Green, Blue);
-		PanelMixer.getSliderArray()[3].setValue((Red+Green+Blue)/3);
-		PanelMixer.getSliderArray()[0].setValue(Red);
-		PanelMixer.getSliderArray()[1].setValue(Green);
-		PanelMixer.getSliderArray()[2].setValue(Blue);
-		return new Color(Red, Green, Blue);
-	}
 
+	public static Color MakeColorFromString(String StrHexCode, boolean SetSliderValues) {
+		int rgb[] = SplitHexStrToInt(StrHexCode);
+		if (SetSliderValues) {
+			PanelMixer.getSliderArray()[3].setValue((rgb[0]+rgb[1]+rgb[2])/3);
+			PanelMixer.getSliderArray()[0].setValue(rgb[0]);
+			PanelMixer.getSliderArray()[1].setValue(rgb[1]);
+			PanelMixer.getSliderArray()[2].setValue(rgb[2]);	
+		}
+		return new Color(rgb[0], rgb[1], rgb[2]);
+	}
+	
 	// Int DEC value to String Percent value
 	public static String DecToPercent(int value) {
 		String percent = (Integer.toString((value * 100) / 255) + " %");	
 		return percent;
 	}
 
+	public static int[] SplitHexStrToInt(String hexString) {
+		int rgb[] = new int[3];
+		rgb[0] = Integer.parseInt(hexString.substring(0, 2), 16);
+		rgb[1] = Integer.parseInt(hexString.substring(2, 4), 16);
+		rgb[2] = Integer.parseInt(hexString.substring(4, 6), 16);
+		return rgb;
+	}
+	
 	public static String makeHexStr(int r, int g, int b) {
 		String strHexOut = String.format("%02x", r) + String.format("%02x", g) + String.format("%02x", b);
 		return strHexOut;

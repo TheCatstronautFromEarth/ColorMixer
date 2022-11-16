@@ -1,4 +1,3 @@
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -12,7 +11,7 @@ import javax.swing.JOptionPane;
 public class DiscIO {
 	
 	private final static JFileChooser open = new JFileChooser();
-	final static JFileChooser save = new JFileChooser();
+	private final static JFileChooser save = new JFileChooser();
 	
 	public static void read(File file) {
 		try {
@@ -20,26 +19,14 @@ public class DiscIO {
 			BufferedReader in = new BufferedReader(new FileReader(file));
 			String row = null;
 			int i = 0;
-			int red[] = new int[16];
-			int green[] = new int[16];
-			int blue[] = new int[16];
-			String valueHex[] = new String[16];
 			int existAmmountOfLabel = PanelCue.getIntAmountOfLabels();		
 			while ((row = in.readLine()) != null) {
-				valueHex[i] = row.substring(3, 9);
-				red[i] = Integer.parseInt(row.substring(3, 5), 16);
-				green[i] = Integer.parseInt(row.substring(5, 7), 16);
-				blue[i] = Integer.parseInt(row.substring(7, 9), 16);
 				existAmmountOfLabel = PanelCue.getIntAmountOfLabels();
 				if (i == existAmmountOfLabel) {
 					PanelCue.AddCueLabel();
 					if (i < 15) { PanelCue.AddCueButton(); }
 				}
-				PanelCue.getButtonArray()[i].setText("Cue " + Integer.toString(i+1));
-				PanelCue.getLabelArray()[i].setText(valueHex[i]);
-				PanelCue.getLabelArray()[i].setOpaque(true);
-				PanelCue.getLabelArray()[i].setBackground(new Color(red[i], green[i], blue[i]));
-				PanelCue.getButtonOverwrite().setEnabled(true);
+				SetBtnAndLbl(i, row.substring(3, 9));
 				i++;
 			}
 		} catch (IOException e) {
@@ -47,6 +34,14 @@ public class DiscIO {
 		}
 	}
 
+	public static void SetBtnAndLbl(int i, String row) {
+		PanelCue.getButtonArray()[i].setText("Cue " + Integer.toString(i+1));
+		PanelCue.getLabelArray()[i].setText(row);
+		PanelCue.getLabelArray()[i].setOpaque(true);
+		PanelCue.getLabelArray()[i].setBackground(Functions.MakeColorFromString(row, false));
+		PanelCue.getButtonOverwrite().setEnabled(true);
+	}
+	
 	public static void write(String file) {
 		boolean writable = false;
 		String[] row = new String[16];
@@ -103,15 +98,16 @@ public class DiscIO {
 	    }
 	}
 	
+	// Save file
 	protected static void saveFile() {
 		String SaveName;		
 		SaveName = "New_Preset.cmf";
+		int retval = save.showSaveDialog(save);
 		if (!SaveName.endsWith(".cmf")) {
 			SaveName = SaveName + ".cmf";
 		}
 		File file = new File(SaveName);
 		save.setSelectedFile(file);
-		int retval = save.showSaveDialog(save);
         save.setFileSelectionMode(JFileChooser.FILES_ONLY);
         save.addChoosableFileFilter(new colorFileFilter());
         if (retval == JFileChooser.APPROVE_OPTION) {

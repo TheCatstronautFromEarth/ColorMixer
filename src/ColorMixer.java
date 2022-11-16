@@ -2,7 +2,7 @@
 public class ColorMixer {
 
 	public static void main(String[] args) {
-		new WindowMixer("ColorMixer v1.5");
+		new WindowMixer("ColorMixer v1.6");
 	}
 
 }
