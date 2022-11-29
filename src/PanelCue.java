@@ -9,15 +9,15 @@ import javax.swing.SwingConstants;
 public class PanelCue {
 
 	private static final int intYOffset = 25;
+	private static final int maxAmountOfButtons = 16;
+	private static final JLabel[] cueLabelArray = new JLabel[16];
+	private static final JButton[] cueButtonArray = new JButton[16];
 	private static int intAmountOfLabels = 0;
 	private static int intAmountOfButtons = 0;
-	private static final int maxAmountOfButtons = 16;
 	private static boolean boolCueSelect = false;
 	private static boolean boolDelete = false;
 	private static JButton buttonOverwrite;
 	private static JButton buttonDelete;
-	private static final JLabel[] cueLabelArray = new JLabel[16];
-	private static final JButton[] cueButtonArray = new JButton[16];
 	private static String cueHexText;
 
 	public static void panCue() {
@@ -133,17 +133,11 @@ public class PanelCue {
 			if (intAmountOfLabels != 16) {
 				WindowMixer.getPanelArray()[0].remove(cueButtonArray[intAmountOfButtons - 1]);
 				intAmountOfButtons--;
-				cueButtonArray[intAmountOfButtons - 1].setText("+ Cue");
-				for (int i = button; i < intAmountOfLabels - 1; i++) {
-					cueLabelArray[i].setText(cueLabelArray[i + 1].getText());
-					cueLabelArray[i].setBackground(cueLabelArray[i + 1].getBackground());
-				}
-			} else {
-				cueButtonArray[intAmountOfButtons - 1].setText("+ Cue");	
-				for (int i = button; i < intAmountOfLabels - 1; i++) {
-					cueLabelArray[i].setText(cueLabelArray[i + 1].getText());
-					cueLabelArray[i].setBackground(cueLabelArray[i + 1].getBackground());
-				}
+			} 
+			cueButtonArray[intAmountOfButtons - 1].setText("+ Cue");
+			for (int i = button; i < intAmountOfLabels - 1; i++) {
+				cueLabelArray[i].setText(cueLabelArray[i + 1].getText());
+				cueLabelArray[i].setBackground(cueLabelArray[i + 1].getBackground());
 			}
 		} else if (button == 15) {
 			cueButtonArray[intAmountOfButtons - 1].setText("+ Cue");

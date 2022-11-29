@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 public class DiscIO {
 
 	private final static JFileChooser open = new JFileChooser();
-	final static JFileChooser save = new JFileChooser();
+	private final static JFileChooser save = new JFileChooser();
 
 	public static void read(File file) {
 		try {
