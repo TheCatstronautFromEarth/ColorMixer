@@ -18,10 +18,10 @@ public class DiscIO {
             BufferedReader in = new BufferedReader(new FileReader(file));
             String row;
             int i = 0;
-            int existAmmountOfLabel;
+            int existAmountOfLabel;
             while ((row = in.readLine()) != null) {
-                existAmmountOfLabel = PanelCue.getIntAmountOfLabels();
-                if (i == existAmmountOfLabel) {
+                existAmountOfLabel = PanelCue.getIntAmountOfLabels();
+                if (i == existAmountOfLabel) {
                     PanelCue.AddCueLabel();
                     if (i < 15) {
                         PanelCue.AddCueButton();
@@ -52,19 +52,13 @@ public class DiscIO {
             row[i] = String.format("%02d", (i + 1)) + ":" + PanelCue.getLabelArray()[i].getText();
         }
         try {
-            File pfad = save.getCurrentDirectory();
-            File saveFile = new File(pfad + "/" + file);
+            File path = save.getCurrentDirectory();
+            File saveFile = new File(path + "/" + file);
             FileWriter fw;
             if (saveFile.exists()) {
                 int answer = JOptionPane.showConfirmDialog(null, "File already exists. Overwrite?", "Alert", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE);
                 if (answer == JOptionPane.OK_OPTION) {
                     writable = true;
-                } else if (answer == JOptionPane.NO_OPTION) {
-                    writable = false;
-                } else if (answer == JOptionPane.CANCEL_OPTION) {
-                    writable = false;
-                } else if (answer == JOptionPane.CLOSED_OPTION) {
-                    writable = false;
                 }
             } else {
                 writable = true;
@@ -90,8 +84,8 @@ public class DiscIO {
     protected static void openFile() {
         open.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         open.addChoosableFileFilter(new colorFileFilter());
-        int retval = open.showOpenDialog(open);
-        if (retval == JFileChooser.APPROVE_OPTION) {
+        int returnValue = open.showOpenDialog(open);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
             File file = open.getSelectedFile();
             DiscIO.read(file);
         }
@@ -99,19 +93,16 @@ public class DiscIO {
 
     // Save file
     protected static void saveFile() {
-        int retval;
+        int returnValue;
         String SaveName;
         SaveName = "New_Preset.cmf";
 
-        if (!SaveName.endsWith(".cmf")) {
-            SaveName = SaveName + ".cmf";
-        }
         File file = new File(SaveName);
         save.setSelectedFile(file);
-        retval = save.showSaveDialog(save);
+        returnValue = save.showSaveDialog(save);
         save.setFileSelectionMode(JFileChooser.FILES_ONLY);
         save.addChoosableFileFilter(new colorFileFilter());
-        if (retval == JFileChooser.APPROVE_OPTION) {
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
             String Name = save.getSelectedFile().getName();
             DiscIO.write(Name);
         }

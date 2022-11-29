@@ -107,11 +107,11 @@ public class PanelMixer {
             for (int i = 0; i < sliderArray.length - 1; i++) {
                 sliderArray[i].setValue((int) (sliderArray[i].getValue() * 1.01 + 1));
             }
-        } else if (masterLinear && !moveUp) {
+        } else if (masterLinear) {
             for (int i = 0; i < sliderArray.length - 1; i++) {
                 sliderArray[i].setValue(sliderArray[i].getValue() - 1);
             }
-        } else if (!masterLinear && !moveUp) {
+        } else {
             for (int i = 0; i < sliderArray.length - 1; i++) {
                 sliderArray[i].setValue((int) (sliderArray[i].getValue() / 1.01));
             }
