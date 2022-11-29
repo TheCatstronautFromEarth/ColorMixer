@@ -8,42 +8,40 @@ import java.io.IOException;
 
 public class Functions {
 
-	private static Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
+    private static final Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
 
-	public static String pasteFromClipboard() throws UnsupportedFlavorException, IOException {
-		String strfromCb;
-		Transferable transfer = cb.getContents(null);
-		strfromCb = (String) transfer.getTransferData(DataFlavor.stringFlavor);
-		return strfromCb;
-	}
+    public static String pasteFromClipboard() throws UnsupportedFlavorException, IOException {
+        String strFromCb;
+        Transferable transfer = cb.getContents(null);
+        strFromCb = (String) transfer.getTransferData(DataFlavor.stringFlavor);
+        return strFromCb;
+    }
 
-	public static Color MakeColorFromString(String StrHexCode, boolean SetSliderValues) {
-		int rgb[] = SplitHexStrToInt(StrHexCode);
-		if (SetSliderValues) {
-			PanelMixer.getSliderArray()[3].setValue((rgb[0] + rgb[1] + rgb[2]) / 3);
-			PanelMixer.getSliderArray()[0].setValue(rgb[0]);
-			PanelMixer.getSliderArray()[1].setValue(rgb[1]);
-			PanelMixer.getSliderArray()[2].setValue(rgb[2]);
-		}
-		return new Color(rgb[0], rgb[1], rgb[2]);
-	}
+    public static Color MakeColorFromString(String StrHexCode, boolean SetSliderValues) {
+        int[] rgb = SplitHexStrToInt(StrHexCode);
+        if (SetSliderValues) {
+            PanelMixer.getSliderArray()[3].setValue((rgb[0] + rgb[1] + rgb[2]) / 3);
+            PanelMixer.getSliderArray()[0].setValue(rgb[0]);
+            PanelMixer.getSliderArray()[1].setValue(rgb[1]);
+            PanelMixer.getSliderArray()[2].setValue(rgb[2]);
+        }
+        return new Color(rgb[0], rgb[1], rgb[2]);
+    }
 
-	// Int DEC value to String Percent value
-	public static String DecToPercent(int value) {
-		String percent = (Integer.toString((value * 100) / 255) + " %");
-		return percent;
-	}
+    // Int DEC value to String Percent value
+    public static String DecToPercent(int value) {
+        return ((value * 100) / 255) + " %";
+    }
 
-	public static int[] SplitHexStrToInt(String hexString) {
-		int rgb[] = new int[3];
-		rgb[0] = Integer.parseInt(hexString.substring(0, 2), 16);
-		rgb[1] = Integer.parseInt(hexString.substring(2, 4), 16);
-		rgb[2] = Integer.parseInt(hexString.substring(4, 6), 16);
-		return rgb;
-	}
+    public static int[] SplitHexStrToInt(String hexString) {
+        int[] rgb = new int[3];
+        rgb[0] = Integer.parseInt(hexString.substring(0, 2), 16);
+        rgb[1] = Integer.parseInt(hexString.substring(2, 4), 16);
+        rgb[2] = Integer.parseInt(hexString.substring(4, 6), 16);
+        return rgb;
+    }
 
-	public static String makeHexStr(int r, int g, int b) {
-		String strHexOut = String.format("%02x", r) + String.format("%02x", g) + String.format("%02x", b);
-		return strHexOut;
-	}
+    public static String makeHexStr(int r, int g, int b) {
+        return String.format("%02x", r) + String.format("%02x", g) + String.format("%02x", b);
+    }
 }
