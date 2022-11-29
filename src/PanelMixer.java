@@ -34,12 +34,14 @@ public class PanelMixer {
 			sliderArray[i].setBackground(new Color(intValue[0], intValue[1], intValue[2]));
 			sliderArray[i].addChangeListener(actions);
 			sliderArray[i].setPaintLabels(true);
-			if (i == 3) { sliderArray[i].setPaintLabels(false); }
+			if (i == 3) {
+				sliderArray[i].setPaintLabels(false);
+			}
 			WindowMixer.getPanelArray()[1].add(sliderArray[i]);
 		}
 
 		// Initialize all Labels
-		String[] str = { "Red", "Green", "Blue", "Master",  "78 %", "78 %", "78 %", "200", "200", "200", "Dec","c8", "c8", "c8", "Hex" };
+		String[] str = { "Red", "Green", "Blue", "Master", "78 %", "78 %", "78 %", "200", "200", "200", "Dec", "c8", "c8", "c8", "Hex" };
 		int[] xOffset = { 30, 115, 200, 295, 30, 115, 200, 30, 115, 200, 300, 30, 115, 200, 300 };
 		int[] yOffset = { 15, 15, 15, 15, 400, 400, 400, 420, 420, 420, 420, 440, 440, 440, 440 };
 		for (int i = 0; i < labelArray.length; i++) {
@@ -55,8 +57,8 @@ public class PanelMixer {
 		WindowMixer.getPanelArray()[1].add(btnSwitch);
 	}
 
-    public static ChangeListener actions = e -> {
-    	JSlider source = (JSlider) e.getSource();
+	public static ChangeListener actions = e -> {
+		JSlider source = (JSlider) e.getSource();
 		if (source.getName().equals("Master")) {
 			intOldMasterValue = intMasterValue;
 			intMasterValue = source.getValue();
@@ -66,13 +68,19 @@ public class PanelMixer {
 				masterSlider(MasterLinear, false);
 			}
 		} else {
-			if (source.getName().equals("Red")) {rgbSliderChange(0, source);}
-			if (source.getName().equals("Green")) {rgbSliderChange(1, source);}
-			if (source.getName().equals("Blue")) {rgbSliderChange(2, source);}
+			if (source.getName().equals("Red")) {
+				rgbSliderChange(0, source);
+			}
+			if (source.getName().equals("Green")) {
+				rgbSliderChange(1, source);
+			}
+			if (source.getName().equals("Blue")) {
+				rgbSliderChange(2, source);
+			}
 		}
 		WindowMixer.SetWindowColor(intValue[0], intValue[1], intValue[2]);
-    };
-    
+	};
+
 	private static void ChangeMasterSlider() {
 		if (btnSwitch.getActionCommand().equals("Linear")) {
 			btnSwitch.setText("Log");
@@ -82,12 +90,12 @@ public class PanelMixer {
 			MasterLinear = true;
 		}
 	}
-	
+
 	private static void rgbSliderChange(int sliderID, JSlider faderSource) {
-		intValue[sliderID] = ((JSlider) faderSource).getValue();	
-		labelArray[sliderID+7].setText(Integer.toString(intValue[sliderID]));
-		labelArray[sliderID+11].setText(String.format("%02x", intValue[sliderID]));
-		labelArray[sliderID+4].setText(Functions.DecToPercent(intValue[sliderID]));
+		intValue[sliderID] = ((JSlider) faderSource).getValue();
+		labelArray[sliderID + 7].setText(Integer.toString(intValue[sliderID]));
+		labelArray[sliderID + 11].setText(String.format("%02x", intValue[sliderID]));
+		labelArray[sliderID + 4].setText(Functions.DecToPercent(intValue[sliderID]));
 	}
 
 	// Set RGB-Slider when MasterSlider is moving
@@ -115,9 +123,11 @@ public class PanelMixer {
 	public static int[] getIntValue() {
 		return intValue;
 	}
+
 	public static JSlider[] getSliderArray() {
 		return sliderArray;
 	}
+
 	public static String getStrHexOut() {
 		return StrHexOut;
 	}

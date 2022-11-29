@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -16,7 +15,8 @@ public class PanelInput {
 	private static JButton btnApply, btnGetClipboard;
 	private static JTextField tFInput;
 	private static JLabel lblMessage;
-	private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("\\p{XDigit}+");
+	private static final Pattern HEXADECIMAL_PATTERN = Pattern
+			.compile("\\p{XDigit}+");
 
 	static void panInput() {
 
@@ -30,25 +30,27 @@ public class PanelInput {
 		btnApply = new JButton("Apply");
 		btnApply.setBounds(265, 18, 90, 24);
 		btnApply.setEnabled(false);
-		btnApply.addActionListener(event -> { 
+		btnApply.addActionListener(event -> {
 			Functions.MakeColorFromString(tFInput.getText(), true);
 		});
 		WindowMixer.getPanelArray()[3].add(btnApply);
-		
+
 		// Label Message
 		lblMessage = new JLabel("Enter HEX value");
 		lblMessage.setBounds(22, 40, 400, 24);
 		WindowMixer.getPanelArray()[3].add(lblMessage);
-		
+
 		// TextField HEX hexInput
 		tFInput = new JTextField();
 		tFInput.setBounds(12, 18, 90, 24);
 		tFInput.getDocument().addDocumentListener(new DocumentListener() {
 			public void changedUpdate(DocumentEvent arg0) {
 			}
+
 			public void insertUpdate(DocumentEvent arg0) {
 				CheckHexInput();
 			}
+
 			public void removeUpdate(DocumentEvent arg0) {
 				CheckHexInput();
 			}
@@ -57,19 +59,19 @@ public class PanelInput {
 	}
 
 	private static boolean isHexadecimal() {
-	    final Matcher matcher = HEXADECIMAL_PATTERN.matcher(tFInput.getText());
-	    return matcher.matches();
+		final Matcher matcher = HEXADECIMAL_PATTERN.matcher(tFInput.getText());
+		return matcher.matches();
 	}
-	
+
 	protected static void CheckHexInput() {
 		String CheckText = null;
-		if (isHexadecimal()) {	
-			if (tFInput.getText().length() == 6){
+		if (isHexadecimal()) {
+			if (tFInput.getText().length() == 6) {
 				btnApply.setEnabled(true);
 				CheckText = "Input OK";
 			} else {
 				btnApply.setEnabled(false);
-				CheckText = "Only 6 character";		
+				CheckText = "Only 6 character";
 			}
 		} else {
 			if (tFInput.getText().length() == 0) {
@@ -81,7 +83,7 @@ public class PanelInput {
 		lblMessage.setText(CheckText);
 	}
 
-	// Button paste from Clipboard ActionListener 
+	// Button paste from Clipboard ActionListener
 	private static ActionListener actions = e -> {
 		if (e.getSource() == btnGetClipboard) {
 			try {
@@ -90,7 +92,7 @@ public class PanelInput {
 				e1.printStackTrace();
 			} catch (IOException e1) {
 				e1.printStackTrace();
-			}	
+			}
 		}
 	};
 }

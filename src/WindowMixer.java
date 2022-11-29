@@ -1,7 +1,5 @@
-
 import java.awt.Color;
 import java.awt.Container;
-
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -27,18 +25,18 @@ public class WindowMixer extends JFrame {
 
 	// Initialize window & panels
 	private void initGUI() {
-		setBounds(500, 200, 630, 620);
+		setBounds(500, 200, 640, 630);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		cp = getContentPane();
 		cp.setLayout(null);
 		cp.setBackground(new Color(200, 200, 200));
-		
+
 		// Initialize Panels
-		String[] panelName = {"Cue", "Mixer", "Output", "Input"};
-		int[] xOffestPanel = { 10, 245,  10, 245};
-		int[] yOffsetPanel = {  5,   5, 485, 485};				
-		int[] xWidthPanel =  {230, 370, 230, 370};
-		int[] yHeightPanel = {480, 480,  70,  70};
+		String[] panelName = { "Cue", "Mixer", "Output", "Input" };
+		int[] xOffestPanel = { 10, 245, 10, 245 };
+		int[] yOffsetPanel = { 5, 5, 485, 485 };
+		int[] xWidthPanel = { 230, 370, 230, 370 };
+		int[] yHeightPanel = { 480, 480, 70, 70 };
 		for (int i = 0; i < panelArray.length; i++) {
 			panelArray[i] = new JPanel();
 			panelArray[i].setBounds(xOffestPanel[i], yOffsetPanel[i], xWidthPanel[i], yHeightPanel[i]);
@@ -68,6 +66,7 @@ public class WindowMixer extends JFrame {
 	public static Container getCp() {
 		return cp;
 	}
+
 	public static JPanel[] getPanelArray() {
 		return panelArray;
 	}

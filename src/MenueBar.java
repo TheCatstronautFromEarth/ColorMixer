@@ -11,42 +11,44 @@ public class MenueBar {
 	private static JMenuItem quit;
 	private static JMenuItem open;
 	private static JMenuItem save;
-	private final static String InfoText =  "<html>ColorMixer v1.6<br>Released on 16. Nov 2022<br><a href='https://github.com/TheCatstronautFromEarth/ColorMixer'>https://github.com/TheCatstronautFromEarth/ColorMixer</a></html>";
+	private final static String InfoText = "<html>ColorMixer v1.7<br>Released on 29. Nov 2022<br><a href='https://github.com/TheCatstronautFromEarth/ColorMixer'>https://github.com/TheCatstronautFromEarth/ColorMixer</a></html>";
 
 	public static void InitMenueBar(WindowMixer windowMixer) {
-		
+
 		JMenuBar menueBar = new JMenuBar();
 		windowMixer.setJMenuBar(menueBar);
-		
+
 		JMenu colorMixer = new JMenu("ColorMixer");
 		menueBar.add(colorMixer);
-		
+
 		info = new JMenuItem("Info");
 		info.addActionListener(actions);
 		colorMixer.add(info);
 		colorMixer.addSeparator();
-		
+
 		quit = new JMenuItem("Quit");
 		quit.addActionListener(actions);
 		colorMixer.add(quit);
-		
+
 		JMenu menueFile = new JMenu("File");
 		menueBar.add(menueFile);
-		
+
 		open = new JMenuItem("Open");
 		open.addActionListener(actions);
 		menueFile.add(open);
-		
+		menueFile.addSeparator();
+
 		save = new JMenuItem("Save as..");
+		save.setEnabled(false);
 		save.addActionListener(actions);
 		menueFile.add(save);
+
 	}
-	
-	// Menue ActionListener 
+
+	// Menue ActionListener
 	private static ActionListener actions = e -> {
-		if (e.getSource() == info ) {
-			JOptionPane.showMessageDialog(null, InfoText, "ColorMixer",
-			        JOptionPane.INFORMATION_MESSAGE);
+		if (e.getSource() == info) {
+			JOptionPane.showMessageDialog(null, InfoText, "ColorMixer", JOptionPane.INFORMATION_MESSAGE);
 		} else if (e.getSource() == quit) {
 			System.exit(0);
 		} else if (e.getSource() == open) {
@@ -55,4 +57,9 @@ public class MenueBar {
 			DiscIO.saveFile();
 		}
 	};
+
+	// Getter
+	public static JMenuItem getSave() {
+		return save;
+	}
 }

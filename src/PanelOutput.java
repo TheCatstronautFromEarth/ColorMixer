@@ -12,7 +12,6 @@ public class PanelOutput {
 	private final static Clipboard cb = Toolkit.getDefaultToolkit().getSystemClipboard();
 
 	static void panOutput() {
-		
 		// Button SetToClipboard
 		btnSetClipboard = new JButton("Copy");
 		btnSetClipboard.setBounds(12, 18, 90, 24);
