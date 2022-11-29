@@ -56,7 +56,7 @@ public class PanelCue {
 	}
 
 	// AL for AddCueButton()
-	public static ActionListener actions = e -> {
+	private static ActionListener actions = e -> {
 		JButton btnCueSource = (JButton) e.getSource();
 		// when pressed +Cue
 		if (Objects.equals(btnCueSource.getText(), "+ Cue")) {
@@ -108,13 +108,13 @@ public class PanelCue {
 		}
 	}
 
-	public static void SetAddCueButtonDisabled() {
+	private static void SetAddCueButtonDisabled() {
 		if (Objects.equals(cueButtonArray[intAmountOfButtons - 1].getText(), "+ Cue")) {
 			cueButtonArray[intAmountOfButtons - 1].setEnabled(false);
 		}
 	}
 
-	public static void CueHandle(Boolean cueSel, Boolean delSel, int bntNum) {
+	private static void CueHandle(Boolean cueSel, Boolean delSel, int bntNum) {
 		if (cueSel) {
 			cueHexText = PanelOutput.getTxtOutput().getText();
 			cueLabelArray[bntNum].setBackground(Functions.MakeColorFromString(cueHexText, false));
@@ -128,7 +128,7 @@ public class PanelCue {
 		}
 	}
 
-	public static void delCue(int button) {
+	private static void delCue(int button) {
 		if (button < 15) {
 			if (intAmountOfLabels != 16) {
 				WindowMixer.getPanelArray()[0].remove(cueButtonArray[intAmountOfButtons - 1]);

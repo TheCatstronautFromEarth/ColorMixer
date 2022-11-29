@@ -13,7 +13,7 @@ public class DiscIO {
 	private final static JFileChooser open = new JFileChooser();
 	private final static JFileChooser save = new JFileChooser();
 
-	public static void read(File file) {
+	private static void read(File file) {
 		try {
 			@SuppressWarnings("resource")
 			BufferedReader in = new BufferedReader(new FileReader(file));
@@ -36,7 +36,7 @@ public class DiscIO {
 		}
 	}
 
-	public static void SetBtnAndLbl(int i, String row) {
+	private static void SetBtnAndLbl(int i, String row) {
 		PanelCue.getButtonArray()[i].setText("Cue " + Integer.toString(i + 1));
 		PanelCue.getLabelArray()[i].setText(row);
 		PanelCue.getLabelArray()[i].setOpaque(true);
@@ -46,7 +46,7 @@ public class DiscIO {
 		MenueBar.getSave().setEnabled(true);
 	}
 
-	public static void write(String file) {
+	private static void write(String file) {
 		boolean writable = false;
 		String[] row = new String[16];
 		PanelCue.getLabelArray();
@@ -120,8 +120,7 @@ public class DiscIO {
 	}
 
 	// FileFilter
-	private static class colorFileFilter extends
-			javax.swing.filechooser.FileFilter {
+	private static class colorFileFilter extends javax.swing.filechooser.FileFilter {
 		public boolean accept(File file) {
 			String filename = file.getName();
 			return file.isDirectory() || filename.toLowerCase().endsWith(".cmf");

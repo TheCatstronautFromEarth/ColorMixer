@@ -15,8 +15,7 @@ public class PanelInput {
 	private static JButton btnApply, btnGetClipboard;
 	private static JTextField tFInput;
 	private static JLabel lblMessage;
-	private static final Pattern HEXADECIMAL_PATTERN = Pattern
-			.compile("\\p{XDigit}+");
+	private static final Pattern HEXADECIMAL_PATTERN = Pattern.compile("\\p{XDigit}+");
 
 	static void panInput() {
 
@@ -63,7 +62,7 @@ public class PanelInput {
 		return matcher.matches();
 	}
 
-	protected static void CheckHexInput() {
+	private static void CheckHexInput() {
 		String CheckText = null;
 		if (isHexadecimal()) {
 			if (tFInput.getText().length() == 6) {

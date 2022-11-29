@@ -57,7 +57,7 @@ public class PanelMixer {
 		WindowMixer.getPanelArray()[1].add(btnSwitch);
 	}
 
-	public static ChangeListener actions = e -> {
+	private static ChangeListener actions = e -> {
 		JSlider source = (JSlider) e.getSource();
 		if (source.getName().equals("Master")) {
 			intOldMasterValue = intMasterValue;
