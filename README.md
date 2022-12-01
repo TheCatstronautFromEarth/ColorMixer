@@ -14,7 +14,7 @@ On Windows/Linux the slider only jumps one value in the direction where you clic
 
 
 Future ideas:
-- Redesign the GUI with JavaFX
+- Redesign the GUI with JavaFX and FXML
 - Implementing a pointer that picks up every color on the desktop
 - Controlling SmartHome WLAN lights with Tuya (JSON, MQTT)
 - Controlling DMX lights over WLAN using an ESP8266 over ArtNet
